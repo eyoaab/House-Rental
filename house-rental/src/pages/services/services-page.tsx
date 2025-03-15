@@ -34,7 +34,8 @@ const ServicesList = () => {
         services Choose from our wide range of services Choose from our wide
         range of services Choose from our wide range of services Choose from our
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 z-50">
+
+      <div className="max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map((service: Service) => (
           <ServiceCard service={service} />
         ))}
@@ -46,7 +47,7 @@ const ServicesList = () => {
         Choose from our wide range of services. We offer a variety of options to
         suit your needs.
       </p>
-      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:flex-row justify-between items-center mt-8">
+      <div className="max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 flex flex-col gap-8 md:flex-row justify-between items-center mt-8">
         {/* Left Content */}
         <div className="w-full md:w-1/2 text-sm">
           <div className="space-y-8">

@@ -8,13 +8,13 @@ interface ServiceCardProps {
 
 export const ServiceCard = ({ service }: ServiceCardProps) => {
   return (
-    <Card className="group overflow-hidden flex flex-col items-center shadow-none h-full rounded-lg cursor-pointer text-secondary border-none">
+    <Card className="z-0 group overflow-hidden flex flex-col items-center shadow-none h-full rounded-lg cursor-pointer text-secondary border-none">
       {/* Image Section */}
       <div className="relative overflow-hidden rounded-md w-full">
         <img
           src={`${service.imageUrl}`}
           alt={service.title}
-          className="w-full h-48 object-contain z-40"
+          className="w-full h-48 object-contain "
         />
       </div>
 

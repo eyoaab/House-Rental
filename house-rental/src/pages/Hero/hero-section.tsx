@@ -3,7 +3,7 @@ import { FaHome } from "react-icons/fa";
 
 export default function HeroPage(): JSX.Element {
   return (
-    <div className="mx-auto max-w-[1440px] text-secondary pl-9 md:flex md:items-center md:justify-between">
+    <div className="max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 text-secondary md:flex md:items-center md:justify-between">
       {/* first column */}
       <div className="order-2 md:order-1 flex flex-col items-start space-y-4 md:w-1/2">
         <div className="flex items-center space-x-2">
@@ -16,7 +16,7 @@ export default function HeroPage(): JSX.Element {
           FIND YOUR DREAM HOME WITH US
         </h1>
         <div className="border-l-2 border-primary pl-4">
-          <p className="text-[14px] text-gray-700">
+          <p className="text-[16px] text-gray-700">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, rerum
             voluptate. Nam ad corporis rem id similique vitae aspernatur quam
             nesciunt, eos.
