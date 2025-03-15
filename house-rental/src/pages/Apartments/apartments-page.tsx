@@ -27,7 +27,7 @@ const ApartmentsList = () => {
   );
 
   // Filter apartments based on search criteria
-  const filteredApartments = apartments.filter((apartment) => {
+  const filteredApartments = apartments.filter((apartment: Apartment) => {
     return (
       apartment.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (minPrice ? apartment.price >= Number(minPrice) : true) &&
@@ -60,7 +60,7 @@ const ApartmentsList = () => {
   }
 
   return (
-    <div className="p-5 w-full flex items-center justify-center flex-col">
+    <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col">
       {/* 
       <FilterBar
         searchQuery={searchQuery}

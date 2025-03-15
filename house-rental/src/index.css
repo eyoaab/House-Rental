@@ -5,6 +5,16 @@
   --color-secondary: #2a2a2a;
   --color-tertiary: #fefefe;
 }
+/* Hide scrollbar for Chrome, Safari, and Edge */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
