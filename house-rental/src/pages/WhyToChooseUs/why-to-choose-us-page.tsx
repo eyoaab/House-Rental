@@ -2,7 +2,7 @@ import { Home } from "lucide-react";
 
 const WhyChooseUs = () => {
   return (
-    <section className="max-w-[1440px] mx-auto flex flex-col items-center justify-center text-secondary overflow-x-hidden px-4 md:px-8 lg:px-16">
+    <section className="max-w-[1440px] mx-auto flex flex-col items-center justify-center text-secondary px-4 md:px-8 lg:px-16 overflow-x-hidden">
       <p className="text-4xl font-semibold text-center text-secondary mt-8">
         Why Choose Us
       </p>

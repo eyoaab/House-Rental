@@ -24,7 +24,7 @@ const ServicesList = () => {
     },
   ];
   return (
-    <div className="p-5 max-w-[1440px] mx-auto min-h-screen flex items-center justify-center flex-col">
+    <div className="p-5 max-w-[1440px] mx-auto min-h-screen flex items-center justify-center flex-col overflow-x-hidden">
       <p className="text-4xl font-semibold text-center text-secondary">
         Our Services
       </p>
