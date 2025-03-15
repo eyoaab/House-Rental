@@ -23,7 +23,7 @@ export const ApartmentDetailsDialog = ({
 }: ApartmentDetailsDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto py-4 bg-white text-secondary w-full sm:w-auto overflow-x-hidden">
+      <DialogContent className="scrollbar-hidden sm:max-w-3xl max-h-[90vh] overflow-y-auto py-4 bg-white text-secondary w-full sm:w-auto overflow-x-hidden">
         <DialogHeader>
           <div className="flex flex-col sm:flex-row justify-between items-start">
             <div>
@@ -38,7 +38,7 @@ export const ApartmentDetailsDialog = ({
           </div>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="scrollbar-hidden space-y-4">
           <div className="relative rounded-lg overflow-hidden">
             <img
               src={
