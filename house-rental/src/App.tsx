@@ -4,6 +4,7 @@ import ServicesList from "./pages/services/services-page";
 import Header from "./components/Common/header";
 import ApartmentsList from "./pages/Apartments/apartments-page";
 import HeroPage from "./pages/Hero/hero-section";
+import PropertySearch from "./components/Common/search-drop-down";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <Header />
       </div>
       <HeroPage />
+      <PropertySearch />
       {/* <ApartmentsList /> */}
       <ServicesList />
     </div>
