@@ -29,7 +29,7 @@ const ServicesList = () => {
       <p className="text-4xl font-semibold text-center text-secondary">
         Our Services
       </p>
-      <p className="text-center text-gray-700 mt-2 max-auto w-[40%] md:w-[40%] lg:w-[50%] text-[16px]">
+      <p className="text-center text-gray-700 mt-2 max-auto w-[80%] md:w-[60%] lg:w-[50%] text-[16px]">
         Choose from our wide range of services Choose from our wide range of
         services Choose from our wide range of services Choose from our wide
         range of services Choose from our wide range of services Choose from our
