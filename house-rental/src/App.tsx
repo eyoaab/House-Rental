@@ -5,6 +5,8 @@ import Header from "./components/Common/header";
 import ApartmentsList from "./pages/Apartments/apartments-page";
 import HeroPage from "./pages/Hero/hero-section";
 import PropertySearch from "./components/Common/search-drop-down";
+import AboutPage from "./pages/About/about-page";
+import Footer from "./components/Common/footer";
 
 const App: React.FC = () => {
   return (
@@ -15,8 +17,10 @@ const App: React.FC = () => {
       </div>
       <HeroPage />
       <PropertySearch />
+      <AboutPage />
       {/* <ApartmentsList /> */}
       <ServicesList />
+      <Footer />
     </div>
   );
 };
