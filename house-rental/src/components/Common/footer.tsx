@@ -7,8 +7,8 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="text-secondary py-10 ">
-      <div className="container mx-auto px-6 md:px-12 lg:px-24">
+    <footer className="text-secondary py-10 max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 ">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Company Info */}
           <div>
@@ -63,11 +63,11 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="mt-8 border-t pt-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-700">
           <p>Copyright &copy; AA Homeist</p>
-          <div className="flex space-x-4 text-pribg-primary text-lg">
-            <FaFacebookF />
-            <FaLinkedinIn />
-            <FaInstagram />
-            <FaYoutube />
+          <div className="flex space-x-4 text-pribg-primary text-lg  ">
+            <FaFacebookF className="hover:text-primary" />
+            <FaLinkedinIn className="hover:text-primary" />
+            <FaInstagram className="hover:text-primary" />
+            <FaYoutube className="hover:text-primary" />
           </div>
           <p>homeist@gmail.com</p>
         </div>

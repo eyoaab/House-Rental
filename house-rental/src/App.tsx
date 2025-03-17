@@ -8,6 +8,7 @@ import PropertySearch from "./components/Common/search-drop-down";
 import AboutPage from "./pages/About/about-page";
 import Footer from "./components/Common/footer";
 import TestimonyList from "./pages/Testimonials/testimonials-page";
+import NewsPage from "./pages/News/news-page";
 const App: React.FC = () => {
   return (
     // <div className="flex  flex-col max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 bg-white">
@@ -21,6 +22,7 @@ const App: React.FC = () => {
       {/* <ApartmentsList /> */}
       <ServicesList />
       <TestimonyList />
+      <NewsPage />
       <Footer />
     </div>
   );
