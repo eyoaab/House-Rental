@@ -1,30 +1,50 @@
-import { Card, CardContent } from "../ui/card";
-import type { Testimony } from "../../types/testimony-type";
+import { Card, CardContent } from "@/components/ui/card";
+import { FaStar } from "react-icons/fa";
 
-interface TestimonyCardProps {
-  testimony: Testimony;
+import { FC } from "react";
+
+interface TestimonialCardProps {
+  name: string;
+  image: string;
+  content: string;
+  rating: number;
 }
 
-export const TestimonyCard = ({ testimony }: TestimonyCardProps) => {
+const TestimonialCard: FC<TestimonialCardProps> = ({
+  name,
+  image,
+  content,
+  rating,
+}) => {
   return (
-    <Card className="group overflow-hidden transition-all shadow-md duration-300 hover:shadow-xl p-4 flex flex-col h-full rounded-lg cursor-pointer border border-gray-200 bg-white">
-      <CardContent>
-        <div className="flex flex-col items-start space-y-3">
-          <img
-            src={testimony.imageUrl}
-            alt={testimony.title}
-            className="w-full h-48 object-cover transition-transform duration-500 rounded-md"
-          />
-          <div>
-            <h2 className="text-lg font-semibold">{testimony.title}</h2>
-            {/* Add a rating component here if needed */}
-            <p className="text-gray-600">{testimony.description}</p>
-          </div>
-        </div>
-      </CardContent>
+    <Card className="border-gray-100 w-full flex flex-col md:flex-row items-center p-6 space-x-6 shadow-sm border rounded-lg">
+      {/* Image */}
+      <img
+        src={image}
+        alt={name}
+        className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-gray-200"
+      />
 
-      {/* Spacer for Flex Growth */}
-      <div className="flex-grow"></div>
+      {/* Content */}
+      <CardContent className="flex-1 text-center md:text-left md:w-auto">
+        <p className="text-sm text-gray-500">{name}</p>
+
+        {/* Rating */}
+        <div className="flex justify-center md:justify-start space-x-1 text-yellow-500 my-2">
+          {[...Array(5)].map((_, index) => (
+            <FaStar
+              key={index}
+              className={index < rating ? "text-yellow-500" : "text-gray-300"}
+            />
+          ))}
+        </div>
+
+        <p className="text-gray-600 text-sm leading-relaxed">{content}</p>
+
+        <p className="mt-4 text-lg font-signature">{name}</p>
+      </CardContent>
     </Card>
   );
 };
+
+export default TestimonialCard;
