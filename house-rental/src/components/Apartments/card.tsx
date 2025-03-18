@@ -20,12 +20,13 @@ export const ApartmentCard = ({
       {/* Image Section */}
       <div className="relative overflow-hidden rounded-md">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnakZlnxxgnoWPcILVLnvcfnct7DSJ8yBYBQ&s"
+          // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnakZlnxxgnoWPcILVLnvcfnct7DSJ8yBYBQ&s"
+          src={`${apartment.imageUrl}`}
           alt={apartment.title}
           className="w-full h-48 object-cover transition-transform duration-500 rounded-md"
         />
         <Badge className="absolute top-2 left-2 bg-primary text-white px-3 py-1 rounded-md drop-shadow-lg">
-          {apartment.status}
+          For {apartment.status}
         </Badge>
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
@@ -60,7 +61,7 @@ export const ApartmentCard = ({
             <div className="flex flex-col items-center gap-1 border-r pr-5 border-gray-300">
               <div className="flex gap-1 items-center">
                 <Ruler className="h-5 w-5 text-secondary" />
-                <p>{apartment.noRoom ?? 100}</p>
+                <p>{apartment.noShowerRoom ?? 0}</p>
               </div>
               <p className="text-xs text-secondary font-semibold">Square Ft</p>
             </div>
@@ -68,7 +69,7 @@ export const ApartmentCard = ({
             <div className="flex flex-col items-center gap-1">
               <div className="flex gap-1 items-center">
                 <Bath className="h-5 w-5 text-secondary" />
-                <p>{apartment.noRoom ?? 3}</p>
+                <p>{apartment.noBathRoom ?? 0}</p>
               </div>
               <p className="text-xs text-secondary font-semibold">Bathroom</p>
             </div>

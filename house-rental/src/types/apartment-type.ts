@@ -5,12 +5,15 @@ export interface Apartment {
   description: string;
   location: string;
   noRoom: string;
+  noBathRoom: string;
+  noShowerRoom: string; // to be replaced with area
   features: string[];
   price: number;
   availableFrom: string;
   availableTo: string;
   imageUrl: string;
   status: string;
+  catagory: string;
   createdAt: string;
   updatedAt: string;
   averageRating: number;

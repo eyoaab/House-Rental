@@ -41,15 +41,16 @@ export const ApartmentDetailsDialog = ({
         <div className="scrollbar-hidden space-y-4">
           <div className="relative rounded-lg overflow-hidden">
             <img
-              src={
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnakZlnxxgnoWPcILVLnvcfnct7DSJ8yBYBQ&s"
-              }
+              // src={
+              //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnakZlnxxgnoWPcILVLnvcfnct7DSJ8yBYBQ&s"
+              // }
+              src={`${apartment.imageUrl}`}
               alt={apartment.title}
               className="w-full h-[180px] sm:h-[280px] object-cover"
             />
             <div className="absolute top-4 left-4 flex gap-2">
               <Badge className="bg-primary text-white">
-                {apartment.status}
+                For {apartment.status}
               </Badge>
             </div>
           </div>
@@ -113,7 +114,9 @@ export const ApartmentDetailsDialog = ({
                     Available To
                   </h3>
                   <p className="font-semibold text-md">
-                    {apartment.availableFrom.slice(0, 10)}
+                    {apartment.availableTo
+                      ? apartment.availableTo.slice(0, 10)
+                      : "Now"}
                     {/* {apartment.availableTo.slice(0, 10)} */}
                   </p>
                 </div>
