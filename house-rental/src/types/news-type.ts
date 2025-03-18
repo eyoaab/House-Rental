@@ -6,3 +6,9 @@ export interface News {
   imageUrl: String;
   date: string;
 }
+
+export interface NewsState {
+  newses: News[];
+  loading: boolean;
+  error: string | null;
+}

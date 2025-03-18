@@ -1,10 +1,12 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import apartmentsReducer from "./slices/apartments-slice";
+import newsReducer from "./slices/news-slice";
 
 const store = configureStore({
   reducer: {
     apartments: apartmentsReducer,
+    news: newsReducer,
   },
 });
 

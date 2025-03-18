@@ -61,7 +61,7 @@ export const ApartmentCard = ({
             <div className="flex flex-col items-center gap-1 border-r pr-5 border-gray-300">
               <div className="flex gap-1 items-center">
                 <Ruler className="h-5 w-5 text-secondary" />
-                <p>{apartment.noShowerRoom ?? 0}</p>
+                <p>{apartment.area ?? 0}</p>
               </div>
               <p className="text-xs text-secondary font-semibold">Square Ft</p>
             </div>

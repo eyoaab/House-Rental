@@ -17,11 +17,10 @@ const ApartmentsList = () => {
   );
 
   // State for filters
-  const [selectedType, setSelectedType] = useState("sell");
+  const [selectedType, setSelectedType] = useState("");
   const [selectedCatagory, setSelectedcatagory] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
-  const [status, setStatus] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedApartment, setSelectedApartment] = useState<Apartment | null>(
     null
@@ -40,7 +39,7 @@ const ApartmentsList = () => {
   // // Filter apartments based on search criteria
   const filteredApartments = apartments.filter((apartment) => {
     return (
-      apartment.status.includes(selectedType) &&
+      (selectedType === "" || apartment.status.includes(selectedType)) &&
       (selectedLocation === "" ||
         selectedLocation === "Location" ||
         apartment.location
@@ -80,68 +79,45 @@ const ApartmentsList = () => {
   }
 
   return (
-    <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
-      {/* 
-      <FilterBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        minPrice={minPrice}
-        setMinPrice={setMinPrice}
-        maxPrice={maxPrice}
-        setMaxPrice={setMaxPrice}
-        noOfRooms={noOfRooms}
-        setNoOfRooms={setNoOfRooms}
-        status={status}
-        setStatus={setStatus}
-      /> */}
-      <PropertySearch
-        onTypeSelect={handleTypeSelect}
-        onLocationSelect={handleLocationSelect}
-        onCatagorySelect={handleCatagorySelect}
-      />
-      <div className="h-6"></div>
+    <div className="w-screen bg-white min-h-screen">
+      <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
+        <PropertySearch
+          onTypeSelect={handleTypeSelect}
+          onLocationSelect={handleLocationSelect}
+          onCatagorySelect={handleCatagorySelect}
+        />
+        <div className="h-6"></div>
 
-      <div className="w-full flex items-center justify-center flex-col">
-        {apartments.length === 0 ? (
-          <div className="text-center py-12 bg-muted/30 rounded-lg">
-            <h3 className="text-xl  text-black font-medium mb-2">
-              No apartments found
-            </h3>
-            <p className="mb-4">
-              Try adjusting your filters to see more results
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                // setSearchQuery("");
-                // setMinPrice("");
-                // setMaxPrice("");
-                // setNoOfRooms("");
-                // setStatus("");
-              }}
-            >
-              Clear All Filters
-            </Button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {apartments.map((apartment: Apartment) => (
-              <ApartmentCard
-                key={apartment.id}
-                apartment={apartment}
-                onViewDetails={handleViewDetails}
-              />
-            ))}
-          </div>
-        )}
+        <div className="w-full flex items-center justify-center flex-col">
+          {filteredApartments.length === 0 ? (
+            <div className="text-center py-12 bg-muted/30 rounded-lg">
+              <h3 className="text-xl  text-secondary font-medium mb-2">
+                No apartments found
+              </h3>
+              <p className="mb-4 text-gray-800">
+                Try adjusting your filters to see more results
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredApartments.map((apartment: Apartment) => (
+                <ApartmentCard
+                  key={apartment.id}
+                  apartment={apartment}
+                  onViewDetails={handleViewDetails}
+                />
+              ))}
+            </div>
+          )}
 
-        {selectedApartment && (
-          <ApartmentDetailsDialog
-            apartment={selectedApartment}
-            isOpen={isDialogOpen}
-            onClose={handleCloseDialog}
-          />
-        )}
+          {selectedApartment && (
+            <ApartmentDetailsDialog
+              apartment={selectedApartment}
+              isOpen={isDialogOpen}
+              onClose={handleCloseDialog}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export interface Apartment {
   location: string;
   noRoom: string;
   noBathRoom: string;
-  noShowerRoom: string; // to be replaced with area
+  area: string; // to be replaced with area
   features: string[];
   price: number;
   availableFrom: string;

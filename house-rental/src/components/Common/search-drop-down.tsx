@@ -9,7 +9,7 @@ export default function PropertySearch({
   onLocationSelect: (location: string) => void;
   onCatagorySelect: (category: string) => void;
 }) {
-  const [activeType, setActiveType] = useState("sell");
+  const [activeType, setActiveType] = useState("");
 
   return (
     <div className="mt-1 md:mt-0 p-4 shadow-sm border border-gray-300 rounded-lg flex flex-col items-start max-w-[1440px] mx-auto bg-white mb-3">
@@ -64,21 +64,22 @@ export default function PropertySearch({
           onChange={(e) => onCatagorySelect(e.target.value)}
         >
           <option>Property Type</option>
+          <option>Office</option>
           <option>Apartment</option>
-          <option>House</option>
           <option>Villa</option>
-          <option>Commercial</option>
+          <option>Penthouse</option>
         </select>
 
-        {/* <select className="border p-0 border-gray-200 w-full sm:w-1/3 h-10 sm:h-8 transition-all duration-300 hover:border-primary text-sm sm:text-base">
-          <option>Property Type</option>
-          <option>Apartment</option>
-          <option>House</option>
-          <option>Villa</option>
-          <option>Commercial</option>
-        </select> */}
-        <div className="px-6 w-full sm:w-max flex items-center justify-center cursor-pointer bg-primary text-white transition-all duration-300 hover:bg-primary-dark">
-          Search
+        <div
+          onClick={() => {
+            setActiveType("");
+            onTypeSelect("");
+            onLocationSelect("");
+            onCatagorySelect("");
+          }}
+          className="px-6 w-full sm:w-max flex items-center justify-center cursor-pointer bg-primary text-white transition-all duration-300 hover:bg-primary-dark"
+        >
+          Reset
         </div>
       </div>
     </div>
