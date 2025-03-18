@@ -1,4 +1,5 @@
 import NavBar from "./nav-bar";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -11,12 +12,16 @@ export default function Header() {
         />
         <NavBar />
         <div className="flex space-x-4 mt-4 sm:mt-0">
-          <div className="bg-white cursor-pointer border border-secondary text-secondary px-3 py-1 rounded-md transition duration-300">
-            Login
-          </div>
-          <div className="cursor-pointer bg-primary text-white px-3 py-1 rounded-md transition duration-300">
-            Sign Up
-          </div>
+          <Link to="/login">
+            <div className="bg-white cursor-pointer border border-secondary text-secondary px-3 py-1 rounded-md transition duration-300">
+              Login
+            </div>
+          </Link>
+          <Link to="/signup">
+            <div className="cursor-pointer bg-primary text-white px-3 py-1 rounded-md transition duration-300">
+              Sign Up
+            </div>
+          </Link>
         </div>
       </div>
     </header>

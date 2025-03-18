@@ -8,6 +8,7 @@ import { ApartmentCard } from "../../components/Apartments/card";
 import { ApartmentDetailsDialog } from "../../components/Apartments/dialog";
 import { ErrorDisplay } from "../../components/Apartments/error-page";
 import { LoadingGrid } from "../../components/Apartments/loading-grid";
+import PropertySearch from "@/components/Common/search-drop-down";
 
 const ApartmentsList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,7 +39,10 @@ const ApartmentsList = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchApartments());
+    // Check if apartments are already loaded before fetching
+    if (apartments.length === 0 && !loading) {
+      dispatch(fetchApartments());
+    }
   }, [dispatch]);
 
   const handleViewDetails = (apartment: Apartment) => {
@@ -60,7 +64,7 @@ const ApartmentsList = () => {
   }
 
   return (
-    <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col">
+    <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
       {/* 
       <FilterBar
         searchQuery={searchQuery}
@@ -74,6 +78,8 @@ const ApartmentsList = () => {
         status={status}
         setStatus={setStatus}
       /> */}
+      <PropertySearch />
+      <div className="h-6"></div>
 
       <div className="w-full flex items-center justify-center flex-col">
         {filteredApartments.length === 0 ? (

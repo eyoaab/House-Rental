@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function SignUpPage() {
   return (
     <div className="scrollbar-hidden  min-h-screen w-screen flex items-center justify-center bg-white px-6 overflow-x-hidden mx-auto">
@@ -122,9 +123,9 @@ export default function SignUpPage() {
               <div className="text-center mt-4">
                 <p className="text-gray-600 text-sm">
                   Already have an account?{" "}
-                  <a href="/login" className="text-primary hover:underline">
+                  <Link to="/login" className="text-primary hover:underline">
                     Log In
-                  </a>
+                  </Link>
                 </p>
               </div>
             </form>

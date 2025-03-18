@@ -5,7 +5,7 @@ import type { RootState, AppDispatch } from "../../state-managment/store";
 import type { Apartment } from "../../types/apartment-type";
 import { ApartmentCard } from "./card";
 import { ApartmentDetailsDialog } from "./dialog";
-
+import { Link } from "react-router-dom";
 const RecomenedApartments = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { apartments, loading, error } = useSelector(
@@ -76,9 +76,11 @@ const RecomenedApartments = () => {
             </div>
             {/* the explore more part */}
             <div className="flex items-center justify-center w-full mt-10">
-              <p className="flex items-center justify-center text-white px-4 py-2  bg-primary rounded-lg cursor-pointer">
-                Explore More
-              </p>
+              <Link to="/apartments">
+                <p className="flex items-center justify-center text-white px-4 py-2  bg-primary rounded-lg cursor-pointer">
+                  Explore More
+                </p>
+              </Link>
             </div>
           </div>
         )}
