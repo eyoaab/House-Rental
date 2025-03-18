@@ -10,23 +10,27 @@ import Footer from "./components/Common/footer";
 import TestimonyList from "./pages/Testimonials/testimonials-page";
 import NewsPage from "./pages/News/news-page";
 import RecomenedApartments from "./components/Apartments/recomended-apartments";
+import SignUpPage from "./pages/Authentication/signup-page";
+import LoginPage from "./pages/Authentication/login-page";
 const App: React.FC = () => {
   return (
+    <div>
+      <SignUpPage />
+    </div>
     // <div className="flex  flex-col max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 bg-white">
-    <div className="scrollbar-hidden flex flex-col max-w-[1440px] mx-auto bg-white">
-      <div className="sticky top-0 lg:pr-10 md:pr-1 sm:pr-10 pr-5 z-50">
+    // <div className="scrollbar-hidden flex flex-col max-w-[1440px] mx-auto bg-white">
+    /* <div className="sticky top-0 lg:pr-10 md:pr-1 sm:pr-10 pr-5 z-50">
         <Header />
       </div>
       <HeroPage />
       <PropertySearch />
       <AboutPage />
-      {/* <ApartmentsList /> */}
       <RecomenedApartments />
       <ServicesList />
       <TestimonyList />
       <NewsPage />
-      <Footer />
-    </div>
+      <Footer /> */
+    /* </div> */
   );
 };
 

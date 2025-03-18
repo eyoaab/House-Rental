@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCalendar } from "react-icons/fa";
+import { CiCalendarDate } from "react-icons/ci";
 import { News } from "@/types/news-type";
 
 type NewsCardProps = {
@@ -33,7 +33,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, onViewDetails }) => {
 
       <div className="px-4 pt-2 pb-1">
         <span className="flex flex-row items-center justify-start text-secondary">
-          <FaCalendar className="inline-block mr-2 text-primary" />
+          <CiCalendarDate className="inline-block mr-2 text-primary" />
           <p className="text-[14px]">{news.date}</p>
         </span>
       </div>
