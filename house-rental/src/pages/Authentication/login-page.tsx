@@ -28,7 +28,7 @@ export default function LoginPage() {
         position: "top-right",
         autoClose: 3000,
       });
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => navigate("/"), 1000);
     }
     // if error find tost it
     if (loginError) {
