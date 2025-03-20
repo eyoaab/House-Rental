@@ -38,10 +38,10 @@ const TestimonyList = () => {
     }
   };
   if (loading) {
-    return <div className="flex justify-center items-center h-[80vh]"></div>;
+    return <div className="flex justify-center items-center"></div>;
   }
   if (error) {
-    return <div className="flex justify-center items-center h-[80vh]"></div>;
+    return <div className="flex justify-center items-center"></div>;
   }
 
   return (

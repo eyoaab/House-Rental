@@ -12,7 +12,7 @@ export default function HeroPage(): JSX.Element {
             Property Listing Website
           </p>
         </div>
-        <h1 className="text-[14px] font-semibold text-secondary leading-tight">
+        <h1 className="text-[14px] md:text-[18px] lg:text-[24px] font-semibold text-secondary leading-tight">
           FIND YOUR DREAM HOME WITH US
         </h1>
         <div className="border-l-2 border-primary pl-4">

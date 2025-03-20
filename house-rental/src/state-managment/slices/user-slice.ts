@@ -43,7 +43,7 @@ export const registerUser = createAsyncThunk<
 
 // Async thunk for user login
 export const loginUser = createAsyncThunk<
-  { message: string; token: string },
+  { message: string; token: string; user: User },
   { username: string; password: string },
   { rejectValue: string }
 >("user/login", async ({ username, password }, { rejectWithValue }) => {
@@ -54,11 +54,12 @@ export const loginUser = createAsyncThunk<
     if (response.status !== 200) {
       return rejectWithValue(response.data?.message || "Login failed.");
     }
+    console.log(response.data);
 
     // Save token to local storage
     localStorage.setItem("token", response.data.token);
 
-    return response.data; // Return success message and token
+    return { ...response.data, user: response.data.user }; // Return success message, token, and user
   } catch (error: any) {
     return rejectWithValue(
       error.response?.data?.message || "An error occurred during login."
@@ -119,9 +120,13 @@ const userSlice = createSlice({
       })
       .addCase(
         loginUser.fulfilled,
-        (state, action: PayloadAction<{ message: string; token: string }>) => {
+        (
+          state,
+          action: PayloadAction<{ message: string; token: string; user: User }>
+        ) => {
           state.isLoginLoading = false;
           state.loginSuccess = action.payload.message;
+          state.user = action.payload.user;
         }
       )
       .addCase(loginUser.rejected, (state, action) => {
