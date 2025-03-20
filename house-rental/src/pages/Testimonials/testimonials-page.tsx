@@ -51,10 +51,9 @@ const TestimonyList = () => {
       </p>
       <div className="flex items-center justify-center w-full py-3">
         <p className="text-center text-gray-700 mt-2 max-auto w-[80%] md:w-[60%] lg:w-[50%] text-[16px]">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse
-          repudiandae exercitationem doloribus cumque! Labore unde itaque
-          adipisci deserunt. Vero officiis corporis porro doloribus nesciunt
-          ratione
+          Hear what our satisfied customers have to say about their experiences
+          with us. Their feedback inspires us to continue delivering exceptional
+          service and quality.
         </p>
       </div>
       {/* the arrow section */}

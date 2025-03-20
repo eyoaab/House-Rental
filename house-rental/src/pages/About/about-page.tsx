@@ -68,10 +68,11 @@ export default function AboutPage() {
             The Leading Real State Property Marketplace
           </h3>
           <p className="text-left text-gray-700 text-[14px] sm:text-[16px]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Perspiciatis asperiores magni omnis voluptatum unde. Eaque,
-            voluptatibus ut! Porro, illum voluptas cumque ex aperiam corporis
-            incidunt esse, iusto deleniti sapiente delectus!
+            We specialize in connecting buyers, sellers, and renters with the
+            perfect properties. From luxurious homes to affordable apartments,
+            our platform offers a wide range of real estate options tailored to
+            meet your needs. Experience seamless transactions and expert
+            guidance every step of the way.
           </p>
           {/* the property section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full my-10">
@@ -80,7 +81,7 @@ export default function AboutPage() {
                 <FaHome className="text-primary inline" />
               </span>
               <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Smart home Design
+                Releable Agents
               </p>
             </div>
             <div className="flex items-center">
@@ -88,7 +89,7 @@ export default function AboutPage() {
                 <FaHome className="text-primary inline" />
               </span>
               <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Beautiful Scenery Around
+                Affordable Prices
               </p>
             </div>
             <div className="flex items-center">
@@ -96,7 +97,7 @@ export default function AboutPage() {
                 <FaHome className="text-primary inline" />
               </span>
               <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Exceptional Lifestyle
+                Modern Architecture
               </p>
             </div>
             <div className="flex items-center">
@@ -104,7 +105,7 @@ export default function AboutPage() {
                 <FaHome className="text-primary inline" />
               </span>
               <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Complete 24/7 Security
+                Expert Guidance
               </p>
             </div>
           </div>

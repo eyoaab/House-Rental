@@ -46,9 +46,9 @@ const NewsPage = () => {
       </p>
 
       <div className="flex items-center justify-center w-full py-3 mb-5">
-        <p className="text-center text-gray-700 mt-2 max-auto w-[80%] md:w-[60%] lg:w-[50%] text-[16px]">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse
-          repudiandae exercitationem{" "}
+        <p className="text-center text-gray-700 mt-2 mx-auto w-[80%] md:w-[60%] lg:w-[50%] text-[16px]">
+          Stay updated with the latest news and insights from around the world.
+          Discover stories that matter to you.
         </p>
       </div>
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

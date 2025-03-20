@@ -42,7 +42,7 @@ const NewssList = () => {
   }
 
   return (
-    <div className="w-screen bg-white min-h-screen">
+    <div className="w-screen bg-white min-h-screen overflow-x-hidden">
       <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
         <div className="w-full flex items-center justify-center flex-col">
           {newses.length === 0 ? (

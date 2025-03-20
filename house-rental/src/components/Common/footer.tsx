@@ -19,11 +19,11 @@ const Footer = () => {
               <span className="text-lg font-semibold">Homeist</span>
             </div>
             <p className="text-sm text-gray-700">
-              Lorem ipsum dolor sit amet consectetur. Egestas lectus feugiat
-              nisi risus.
+              Homeist connects you with rental properties that fit your needs
+              and lifestyle.
             </p>
-            <p className="text-sm text-gray-700 mt-2">Dhaka, Bangladesh</p>
-            <p className="text-sm text-gray-700">homeist@gmail.com</p>
+            <p className="text-sm text-gray-700 mt-2">Adama,Ethiopia</p>
+            <p className="text-sm text-gray-700">eyobtariku48@gmail.com</p>
           </div>
 
           {/* Explore */}
@@ -53,9 +53,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
             <ul className="text-sm text-gray-700 space-y-2">
-              <li>Blogs</li>
-              <li>FAQ</li>
-              <li>Reviews</li>
+              <li>Properties</li>
+              <li>News</li>
+              <li>About</li>
+              <li>Testimonies</li>
+              <li>Services</li>
             </ul>
           </div>
         </div>
@@ -69,7 +71,7 @@ const Footer = () => {
             <FaInstagram className="hover:text-primary" />
             <FaYoutube className="hover:text-primary" />
           </div>
-          <p>homeist@gmail.com</p>
+          <p>eyobtariku48@gmail.com</p>
         </div>
       </div>
     </footer>

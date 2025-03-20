@@ -17,9 +17,8 @@ export default function HeroPage(): JSX.Element {
         </h1>
         <div className="border-l-2 border-primary pl-4">
           <p className="text-[16px] text-gray-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, rerum
-            voluptate. Nam ad corporis rem id similique vitae aspernatur quam
-            nesciunt, eos.
+            Discover the best properties for sale and rent. Your dream home is
+            just a click away with our trusted listings and expert guidance.
           </p>
         </div>
         <div className="bg-primary text-white px-5 py-2 rounded-lg mt-5 cursor-pointer hover:bg-primary-dark transition">

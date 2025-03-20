@@ -50,8 +50,8 @@ const RecomenedApartments = () => {
             </p>
             <div className="flex items-center justify-center w-full py-3">
               <p className="text-center text-gray-700 mt-2 max-auto w-[80%] md:w-[60%] lg:w-[50%] text-[16px]">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse
-                repudiandae exercitationem doloribus cumque!
+                Browse through our handpicked selection of highly recommended
+                properties, tailored to meet your needs and preferences.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

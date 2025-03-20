@@ -7,20 +7,19 @@ const ServicesList = () => {
     {
       title: "Buy A New Home",
       description:
-        "This is a description This is a descriptionThis is a description This is a description This is a description This is a description This is a description This is a description",
+        "Discover your dream home with ease. Browse through a wide range of properties tailored to your preferences and budget, and let us help you make the buying process seamless and stress-free.",
       imageUrl: "/image1.jpeg",
     },
     {
       title: "Sell A Home",
       description:
-        "This is a description This is a descriptionThis is a description This is a description This is a description This is a description This is a description This is a description",
-
+        "Reach potential buyers quickly and efficiently. Our platform provides the tools and exposure you need to showcase your property and close deals faster.",
       imageUrl: "/image2.jpeg",
     },
     {
       title: "Rent A Home",
       description:
-        "This is a description This is a descriptionThis is a description This is a description This is a description This is a description This is a description This is a description",
+        "Find the perfect rental property that suits your lifestyle and budget. Whether you're looking for a cozy apartment or a spacious house, we make renting simple and hassle-free.",
       imageUrl: "/image4.jpeg",
     },
   ];
@@ -30,9 +29,8 @@ const ServicesList = () => {
         Our Services
       </p>
       <p className="text-center text-gray-700 mt-2 max-auto w-[80%] md:w-[60%] lg:w-[50%] text-[16px]">
-        Choose from our wide range of services Choose from our wide range of
-        services Choose from our wide range of services Choose from our wide
-        range of services Choose from our wide range of services Choose from our
+        Our platform connects buyers, sellers, landlords, and renters, making it
+        easy to find your perfect match in the real estate market.
       </p>
 
       <div className="max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -44,8 +42,8 @@ const ServicesList = () => {
         Why Choose Us
       </p>
       <p className="text-center mt-4 md:w-[40%] lg:w-[40%] z-10 text-gray-700 text-[16px]">
-        Choose from our wide range of services. We offer a variety of options to
-        suit your needs.
+        Discover why we stand out in the real estate market. Our commitment to
+        quality, innovation, and customer satisfaction sets us apart.
       </p>
       <div className="max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 flex flex-col gap-8 md:flex-row justify-between items-center mt-8">
         {/* Left Content */}
@@ -55,12 +53,13 @@ const ServicesList = () => {
               <div className="flex items-center gap-2 z-10">
                 <Home className="text-primary text-lg" />
                 <h3 className="text-lg font-semibold text-secondary">
-                  Smart Home Design
+                  Seamless Connections
                 </h3>
               </div>
               <p className="text-secondary w-[80%]">
-                Lorem ipsum dolor sit amet consectetur. Convallis neque ut
-                tellus suscipit leo at. Lorem ipsum dolor sit amet consectetur.
+                We specialize in connecting buyers and sellers effortlessly. Our
+                platform ensures a smooth and efficient process, making real
+                estate transactions hassle-free.
               </p>
             </div>
 
@@ -68,25 +67,27 @@ const ServicesList = () => {
               <div className="flex items-center gap-2">
                 <Home className="text-primary text-lg" />
                 <h3 className="text-lg font-semibold text-secondary">
-                  Energy Efficient
+                  Trusted Brokerage
                 </h3>
               </div>
               <p className="text-secondary w-[80%]">
-                Lorem ipsum dolor sit amet consectetur. Convallis neque ut
-                tellus suscipit leo at. Lorem ipsum dolor sit amet consectetur.
+                We act as a reliable bridge between property owners and clients,
+                ensuring smooth and transparent transactions. Our expertise in
+                the Ethiopian real estate market guarantees satisfaction for all
+                parties involved.
               </p>
             </div>
-
             <div className="flex flex-col items-start space-y-2 z-10">
               <div className="flex items-center gap-2">
                 <Home className="text-primary text-lg" />
                 <h3 className="text-lg font-semibold text-secondary">
-                  Modern Amenities
+                  Legal Organization
                 </h3>
               </div>
               <p className="text-secondary w-[80%]">
-                Lorem ipsum dolor sit amet consectetur. Convallis neque ut
-                tellus suscipit leo at. Lorem ipsum dolor sit amet consectetur.
+                We are a fully licensed and tax-compliant organization, ensuring
+                transparency and adherence to all legal requirements in the real
+                estate industry.
               </p>
             </div>
           </div>
