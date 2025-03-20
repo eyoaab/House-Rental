@@ -2,7 +2,6 @@ import React from "react";
 import Header from "@/components/Common/header";
 import Footer from "@/components/Common/footer";
 import HeroPage from "@/pages/Hero/hero-section";
-import PropertySearch from "@/components/Common/search-drop-down";
 import AboutPage from "@/pages/About/about-page";
 import RecomenedApartments from "@/components/Apartments/recomended-apartments";
 import ServicesList from "@/pages/services/services-page";
