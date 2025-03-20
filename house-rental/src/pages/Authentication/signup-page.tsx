@@ -1,7 +1,66 @@
 import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "@/state-managment/slices/user-slice";
+import { useNavigate } from "react-router-dom";
+import type { RootState, AppDispatch } from "../../state-managment/store";
 export default function SignUpPage() {
+  // function to handle the sigbn up
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+  const { signUpSuccess, isSignUpLoading, signUpError } = useSelector(
+    (state: RootState) => state.user
+  );
+
+  // useSelector((state: RootState) => state.user);
+  // useSelector((state: RootState) => state.user);
+  function handleSubit() {
+    if (password !== confirmPassword) {
+      toast.error("Password do not match!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } else {
+      dispatch(
+        registerUser({
+          username: userName,
+          password: password,
+          fullName: firstName + " " + lastName,
+        })
+      );
+    }
+  }
+
+  // Navigate to login page on successful registration
+  useEffect(() => {
+    if (signUpSuccess) {
+      toast.success(signUpSuccess, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      // Navigate to login page after a delay
+      const timer = setTimeout(() => navigate("/login"), 1000);
+      return () => clearTimeout(timer); // Cleanup timeout on component unmount
+    }
+
+    // if error find tost it
+    if (signUpError) {
+      toast.error(signUpError, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+  }, [signUpSuccess, navigate, signUpError]);
   return (
     <div className="scrollbar-hidden  min-h-screen w-screen flex items-center justify-center bg-white px-6 overflow-x-hidden mx-auto">
+      {/* Place ToastContainer at the top level of the component */}
       {/* Card Container */}
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-4xl mx-auto h-[70%]">
         <div className="grid lg:grid-cols-2">
@@ -44,6 +103,7 @@ export default function SignUpPage() {
                   <input
                     type="text"
                     id="firstName"
+                    onChange={(e) => setFirstName(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="John"
                   />
@@ -58,6 +118,7 @@ export default function SignUpPage() {
                   <input
                     type="text"
                     id="lastName"
+                    onChange={(e) => setLastName(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="Doe"
                   />
@@ -75,6 +136,7 @@ export default function SignUpPage() {
                 <input
                   type="email"
                   id="email"
+                  onChange={(e) => setUserName(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   placeholder="example@mail.com"
                 />
@@ -92,6 +154,7 @@ export default function SignUpPage() {
                   <input
                     type="password"
                     id="password"
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="••••••••"
                   />
@@ -106,6 +169,7 @@ export default function SignUpPage() {
                   <input
                     type="password"
                     id="confirmPassword"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="••••••••"
                   />
@@ -114,8 +178,11 @@ export default function SignUpPage() {
 
               {/* Submit Button */}
               <div className="flex justify-center mt-6">
-                <div className="cursor-pointer w-max bg-primary text-white py-2 px-6 rounded-md  transition-all transform focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                  Sign Up
+                <div
+                  onClick={handleSubit}
+                  className="cursor-pointer w-max bg-primary text-white py-2 px-6 rounded-md  transition-all transform focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  {isSignUpLoading ? "Lading.." : "Sign Up"}
                 </div>
               </div>
 

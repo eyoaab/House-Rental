@@ -7,18 +7,23 @@ import LoginPage from "./pages/Authentication/login-page";
 import MainLayout from "./layout/main-layout";
 import PageNotFound from "./components/Common/page-not-found";
 import ApartmentsList from "./pages/Apartments/apartments-page";
-
+import { ToastContainer } from "react-toastify";
+import NewssList from "./pages/News/all-news";
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/apartments" element={<ApartmentsList />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </Router>
+    <>
+      <ToastContainer />
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainLayout />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/apartments" element={<ApartmentsList />} />
+          <Route path="/news" element={<NewssList />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Router>
+    </>
   );
 };
 

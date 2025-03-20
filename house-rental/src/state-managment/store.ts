@@ -2,11 +2,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import apartmentsReducer from "./slices/apartments-slice";
 import newsReducer from "./slices/news-slice";
+import userReducer from "./slices/user-slice";
 
 const store = configureStore({
   reducer: {
     apartments: apartmentsReducer,
     news: newsReducer,
+    user: userReducer,
   },
 });
 

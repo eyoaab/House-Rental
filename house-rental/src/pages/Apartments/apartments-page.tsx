@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchApartments } from "../../state-managment/slices/apartments-slice";
 import type { RootState, AppDispatch } from "../../state-managment/store";
 import type { Apartment } from "../../types/apartment-type";
-import { Button } from "../../components/ui/button";
 import { ApartmentCard } from "../../components/Apartments/card";
 import { ApartmentDetailsDialog } from "../../components/Apartments/dialog";
 import { ErrorDisplay } from "../../components/Apartments/error-page";

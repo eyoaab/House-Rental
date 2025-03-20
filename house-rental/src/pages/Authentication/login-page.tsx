@@ -1,6 +1,43 @@
 import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../state-managment/store";
+import { loginUser } from "../../state-managment/slices/user-slice";
+import { RootState } from "../../state-managment/store";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { loginSuccess, isLoginLoading, loginError } = useSelector(
+    (state: RootState) => state.user
+  );
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch(loginUser({ username, password }));
+  };
+
+  useEffect(() => {
+    if (loginSuccess) {
+      toast.success(loginSuccess, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      setTimeout(() => navigate("/"), 2000);
+    }
+    // if error find tost it
+    if (loginError) {
+      toast.error(loginError, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+  }, [loginSuccess, navigate, loginError]);
   return (
     <div className="scrollbar-hidden min-h-screen w-screen flex items-center justify-center bg-white px-6 overflow-x-hidden mx-auto">
       {/* Card Container */}
@@ -41,6 +78,8 @@ export default function LoginPage() {
                 <input
                   type="email"
                   id="email"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   placeholder="example@mail.com"
                 />
@@ -57,6 +96,8 @@ export default function LoginPage() {
                 <input
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   placeholder="••••••••"
                 />
@@ -64,8 +105,11 @@ export default function LoginPage() {
 
               {/* Submit Button */}
               <div className="flex justify-center mt-6">
-                <div className="cursor-pointer w-max bg-primary text-white py-2 px-6 rounded-md transition-all transform focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                  Login
+                <div
+                  onClick={handleSubmit}
+                  className="cursor-pointer w-max bg-primary text-white py-2 px-6 rounded-md transition-all transform focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  {isLoginLoading ? "Loading..." : "Login"}
                 </div>
               </div>
 

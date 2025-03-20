@@ -1,16 +1,17 @@
 // newsSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import { News, NewsState } from "@/types/news-type";
 
-// Async thunk to fetch news
+// Async thunk to fetch news using Axios
 export const fetchNews = createAsyncThunk<News[], void>(
   "news/fetchNews",
   async () => {
-    const response = await fetch(
-      "https://house-rental-backend-tc9z.onrender.com/api/blog"
+    const response = await axios.get(
+      "https://house-rental-backend-tc9z.onrender.com/api/blogs/"
     );
-    const data = await response.json();
-    return data;
+    console.log(response.data);
+    return response.data.blogs;
   }
 );
 
@@ -35,7 +36,7 @@ const newsSlice = createSlice({
       })
       .addCase(fetchNews.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to fetch apartments";
+        state.error = action.error.message || "Failed to fetch news";
       });
   },
 });

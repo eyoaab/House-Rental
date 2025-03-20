@@ -16,6 +16,8 @@ interface ApartmentDetailsDialogProps {
   onClose: () => void;
 }
 
+const IMAGE_WIDTH = 400;
+
 export const ApartmentDetailsDialog = ({
   apartment,
   isOpen,
@@ -39,14 +41,12 @@ export const ApartmentDetailsDialog = ({
         </DialogHeader>
 
         <div className="scrollbar-hidden space-y-4">
-          <div className="relative rounded-lg overflow-hidden">
+          <div className="relative rounded-lg overflow-hidden w-full flex justify-center">
             <img
-              // src={
-              //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnakZlnxxgnoWPcILVLnvcfnct7DSJ8yBYBQ&s"
-              // }
               src={`${apartment.imageUrl}`}
               alt={apartment.title}
-              className="w-full h-[180px] sm:h-[280px] object-cover"
+              className="h-[180px] sm:h-[280px] object-cover"
+              style={{ width: IMAGE_WIDTH }}
             />
             <div className="absolute top-4 left-4 flex gap-2">
               <Badge className="bg-primary text-white">
@@ -117,7 +117,6 @@ export const ApartmentDetailsDialog = ({
                     {apartment.availableTo
                       ? apartment.availableTo.slice(0, 10)
                       : "Now"}
-                    {/* {apartment.availableTo.slice(0, 10)} */}
                   </p>
                 </div>
               </div>
@@ -137,7 +136,7 @@ export const ApartmentDetailsDialog = ({
         <DialogFooter className="flex flex-col sm:flex-row gap-3 sm:gap-0 mt-6 ">
           <p
             onClick={onClose}
-            className="sm:mr-auto text-primary  cursor-pointer hover:underline"
+            className="sm:mr-auto text-primary cursor-pointer hover:underline"
           >
             close
           </p>

@@ -15,7 +15,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, onViewDetails }) => {
     >
       <img
         className="w-full h-48 object-cover"
-        src={`${news.imageUrl}`}
+        src={news.imageUrl ? `${news.imageUrl}` : "placeholder.png"}
         alt={news.title}
       />
       <div className="px-4 py-2">
@@ -34,7 +34,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, onViewDetails }) => {
       <div className="px-4 pt-2 pb-1">
         <span className="flex flex-row items-center justify-start text-secondary">
           <CiCalendarDate className="inline-block mr-2 text-primary" />
-          <p className="text-[14px]">{news.date}</p>
+          <p className="text-[14px]">{news.date.slice(0, 10)}</p>
         </span>
       </div>
     </div>

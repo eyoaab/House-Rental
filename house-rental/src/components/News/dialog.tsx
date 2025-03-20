@@ -31,7 +31,7 @@ export const NewsDetailsDialog = ({
               </DialogTitle>
               <div className="flex items-center gap-1.5 text-muted-foreground mt-1">
                 <FaCalendar className="h-4 w-4 text-primary" />
-                {news.date}
+                {news.date.slice(0, 10)}
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@ export const NewsDetailsDialog = ({
         <div className="scrollbar-hidden space-y-4">
           <div className="relative rounded-lg overflow-hidden">
             <img
-              src={`${news.imageUrl}`}
+              src={news.imageUrl ? `${news.imageUrl}` : "placeholder.png"}
               alt={news.title}
               className="w-full h-[180px] sm:h-[280px] object-cover"
             />
