@@ -13,34 +13,10 @@ const NewsPage = () => {
     (state: RootState) => state.news
   );
   useEffect(() => {
-    dispatch(fetchNews());
-  }, [dispatch]);
-  // const newsItems: News[] = [
-  //   {
-  //     id: 1,
-  //     title: "Recent Movements in Commercial Real Estate",
-  //     date: "13 November",
-  //     description:
-  //       "Lorem ipsum dolor sit amet consectetur. Conradis magnet ut tellus interdit leo at.",
-  //     imageUrl: "./image2.jpeg",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "The most inspiring interior design of 2024",
-  //     date: "2 August",
-  //     description:
-  //       "Lorem ipsum dolor sit amet consectetur. Espinal luctus feugiat elit non.",
-  //     imageUrl: "./image1.jpeg",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Latest Commercial Property Transactions and Trends",
-  //     date: "23 October",
-  //     description:
-  //       "Lorem ipsum dolor sit amet consectetur. Except amet vaker non purus.",
-  //     imageUrl: "./about.jpeg",
-  //   },
-  // ];
+    if (newses.length == 0) {
+      dispatch(fetchNews());
+    }
+  }, [dispatch, newses]);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedNews, setSelectedNews] = useState<News | null>(null);
@@ -75,7 +51,7 @@ const NewsPage = () => {
           repudiandae exercitationem{" "}
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {newses.slice(0, Math.min(newses.length, 3)).map((news: News) => (
           <NewsCard
             key={news.id}
@@ -83,6 +59,22 @@ const NewsPage = () => {
             onViewDetails={handleViewDetails}
           />
         ))}
+      </div> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {(newses.length > 3 ? newses.slice(0, 3) : newses).map(
+          (news: News, index: number) => (
+            <div
+              key={news.id}
+              className={`
+                          ${index === 2 ? "lg:mt-0 lg:mb-28" : ""}
+                          ${index === 1 ? "lg:mt-14 lg:mb-14" : ""}
+                          ${index === 0 ? "lg:mt-28 lg:mb-0" : ""}
+                        `}
+            >
+              <NewsCard news={news} onViewDetails={handleViewDetails} />
+            </div>
+          )
+        )}
       </div>
       {selectedNews && (
         <NewsDetailsDialog

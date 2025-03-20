@@ -1,35 +1,25 @@
-import { useState } from "react";
 import TestimonyCard from "./../../components/Testimonial/card";
-import type { Testimony } from "../../types/testimony-type";
+// import type { Testimony } from "../../types/testimony-type";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../../state-managment/store";
 // import the arrow left and arrow right from react-icons
 import { ArrowRight, ArrowLeft } from "lucide-react";
-
-const testimonies: Testimony[] = [
-  {
-    id: 1,
-    imageUrl: "./ceo.jpeg",
-    title: "Great Experience!",
-    description:
-      "I had an amazing time using this product. Highly recommended! I had an amazing time using this product. Highly recommended! I had an amazing time using this product. Highly recommended!",
-    rating: 5,
-  },
-  {
-    id: 2,
-    imageUrl: "./image2.jpeg",
-    title: "Loved it!",
-    description: "Absolutely wonderful service and support. Will use again!",
-    rating: 4,
-  },
-  {
-    id: 3,
-    imageUrl: "./profile.jpeg",
-    title: "Fantastic!",
-    description: "Exceeded my expectations in every way possible.",
-    rating: 5,
-  },
-];
+import { fetchTestimonies } from "@/state-managment/slices/testimony-slice";
 
 const TestimonyList = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { testimonies, loading, error } = useSelector(
+    (state: RootState) => state.testimony
+  );
+
+  useEffect(() => {
+    // Check if apartments are already loaded before fetching
+    if (testimonies.length === 0 && !loading) {
+      dispatch(fetchTestimonies());
+    }
+  }, [dispatch]);
+
   const [index, setIndex] = useState(0);
   // functionto increment the inde
   const incrementIndex = () => {
@@ -47,6 +37,13 @@ const TestimonyList = () => {
       setIndex(testimonies.length - 1);
     }
   };
+  if (loading) {
+    return <div className="flex justify-center items-center h-[80vh]"></div>;
+  }
+  if (error) {
+    return <div className="flex justify-center items-center h-[80vh]"></div>;
+  }
+
   return (
     <div className="py-4 max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 my-10">
       <p className="text-4xl font-semibold text-center text-secondary">
@@ -80,13 +77,15 @@ const TestimonyList = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center items-center space-x-4 w-full px-4 max-w-[1440px] mx-auto">
-        <TestimonyCard
-          key={index}
-          name={testimonies[index].title}
-          rating={testimonies[index].rating}
-          image={testimonies[index].imageUrl}
-          content={testimonies[index].description}
-        />
+        {testimonies.length > 0 && (
+          <TestimonyCard
+            key={testimonies[index].id}
+            name={testimonies[index].name}
+            rating={testimonies[index].rate}
+            image={testimonies[index].imageUrl}
+            content={testimonies[index].description}
+          />
+        )}
       </div>
     </div>
   );
