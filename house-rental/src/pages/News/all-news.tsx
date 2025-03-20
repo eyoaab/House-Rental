@@ -43,7 +43,17 @@ const NewssList = () => {
 
   return (
     <div className="w-screen bg-white min-h-screen overflow-x-hidden">
-      <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
+        <h1 className="text-4xl text-center font-medium text-secondary m">
+          All News
+        </h1>
+
+        <div className="flex items-center justify-center w-full pt-3 mb-5">
+          <p className="text-center text-gray-700  mx-auto w-[80%] md:w-[60%] lg:w-[50%] text-[16px]">
+            Stay updated with the latest news and insights from around the
+            world. Discover stories that matter to you.
+          </p>
+        </div>
         <div className="w-full flex items-center justify-center flex-col">
           {newses.length === 0 ? (
             <div className="text-center py-12 bg-muted/30 rounded-lg">

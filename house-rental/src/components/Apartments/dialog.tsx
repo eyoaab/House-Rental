@@ -1,4 +1,5 @@
 import { Badge } from "../ui/badge";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,6 +10,7 @@ import {
 import { Separator } from "../ui/separator";
 import { Calendar, DollarSign, Home, MapPin } from "lucide-react";
 import type { Apartment } from "../../types/apartment-type";
+import DateRangeModal from "./make-bookings"; // Adjust the path as needed
 
 interface ApartmentDetailsDialogProps {
   apartment: Apartment;
@@ -23,6 +25,16 @@ export const ApartmentDetailsDialog = ({
   isOpen,
   onClose,
 }: ApartmentDetailsDialogProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  if (isModalOpen) {
+    return (
+      <DateRangeModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        apartment={apartment}
+      />
+    );
+  }
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="scrollbar-hidden sm:max-w-3xl max-h-[90vh] overflow-y-auto py-4 bg-white text-secondary w-full sm:w-auto overflow-x-hidden">
@@ -133,12 +145,18 @@ export const ApartmentDetailsDialog = ({
           </div>
         </div>
 
-        <DialogFooter className="flex flex-col sm:flex-row gap-3 sm:gap-0 mt-6 ">
+        <DialogFooter className="flex flex-col sm:flex-row  justify-betweengap-3 sm:gap-0 mt-6 ">
           <p
             onClick={onClose}
             className="sm:mr-auto text-primary cursor-pointer hover:underline"
           >
             close
+          </p>
+          <p
+            onClick={() => setIsModalOpen(true)}
+            className="btn-primary text-white text-center px-2 py-1 rounded-md bg-primary cursor-pointer"
+          >
+            Book Now
           </p>
         </DialogFooter>
       </DialogContent>
