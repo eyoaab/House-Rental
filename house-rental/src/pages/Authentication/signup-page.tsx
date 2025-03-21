@@ -19,8 +19,6 @@ export default function SignUpPage() {
     (state: RootState) => state.user
   );
 
-  // useSelector((state: RootState) => state.user);
-  // useSelector((state: RootState) => state.user);
   function handleSubit() {
     if (!firstName || !lastName || !userName || !password || !confirmPassword) {
       toast.error("Please fill all the fields", {

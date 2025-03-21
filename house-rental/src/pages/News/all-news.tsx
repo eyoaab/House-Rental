@@ -44,7 +44,7 @@ const NewssList = () => {
   return (
     <div className="w-screen bg-white min-h-screen overflow-x-hidden">
       <div className="max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
-        <h1 className="text-4xl text-center font-medium text-secondary m">
+        <h1 className="text-4xl text-center font-medium text-secondary my-3">
           All News
         </h1>
 

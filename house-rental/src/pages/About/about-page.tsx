@@ -10,6 +10,13 @@ export default function AboutPage() {
       <div className="flex flex-row flex-wrap items-center justify-evenly mb-10 w-full">
         <div className="m-2 cursor-pointer">
           <img
+            src="./partner3.png"
+            alt="partner1"
+            className="h-24 w-24 sm:h-20 sm:w-20"
+          />
+        </div>
+        <div className="m-2 cursor-pointer">
+          <img
             src="./partner1.png"
             alt="partner1"
             className="h-24 w-24 sm:h-20 sm:w-20"
@@ -17,28 +24,22 @@ export default function AboutPage() {
         </div>
         <div className="m-2 cursor-pointer">
           <img
-            src="./partner2.png"
+            src="./partner5.png"
             alt="partner2"
             className="h-24 w-24 sm:h-20 sm:w-20"
           />
         </div>
+
         <div className="m-2 cursor-pointer">
           <img
-            src="./partner1.png"
-            alt="partner1"
-            className="h-24 w-24 sm:h-20 sm:w-20"
-          />
-        </div>
-        <div className="m-2 cursor-pointer">
-          <img
-            src="./partner2.png"
+            src="./partner4.png"
             alt="partner4"
             className="h-24 w-24 sm:h-20 sm:w-20"
           />
         </div>
         <div className="m-2 cursor-pointer">
           <img
-            src="./partner1.png"
+            src="./partner3.png"
             alt="partner3"
             className="h-24 w-24 sm:h-20 sm:w-20"
           />

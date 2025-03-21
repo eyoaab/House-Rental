@@ -14,7 +14,9 @@ export default function Header() {
   //from the token extract the userid
   let userName = null;
   if (token) {
+    console.log("theris a token");
     userName = token ? JSON.parse(atob(token.split(".")[1])).username : null;
+    console.log(userName);
   }
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -31,11 +33,11 @@ export default function Header() {
           className="lg:block hidden w-16 h-16 rounded-full mb-4 sm:mb-0"
         />
         <NavBar />
-        {user || userName ? (
+        {user?.username || userName ? (
           <div className="flex items-center space-x-4">
             <div>
               <div className="bg-primary text-white px-3 py-1 rounded-md cursor-pointer transition duration-300">
-                {userName || user!.username}
+                {user?.username || userName}
               </div>
             </div>
             <div>
