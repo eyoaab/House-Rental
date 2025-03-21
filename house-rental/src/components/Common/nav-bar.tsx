@@ -9,23 +9,26 @@ import {
 
 function NavBar() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const menuItems = ["Home", "Services", "Contact Us", "Property"];
+  const menuItems = ["About", "Property", "Services", "Blogs"];
+  const Links = ["#about", "#property", "#services", "#blogs"];
 
   return (
     <nav className="text-sm flex justify-between items-center z-[100] bg-black/50 text-white p-2 shadow-md shadow-gray-200 rounded-md border border-gray-50 md:bg-white md:text-secondary">
       <div className="hidden md:flex space-x-4">
         {menuItems.map((item, index) => (
-          <p
-            key={index}
-            className={`text-md font-semibold px-4 py-1 cursor-pointer ${
-              selectedIndex === index
-                ? "bg-primary/10 rounded-md text-primary"
-                : "bg-transparent"
-            }`}
-            onClick={() => setSelectedIndex(index)}
-          >
-            {item}
-          </p>
+          <a href={Links[index]}>
+            <p
+              key={index}
+              className={`text-md font-semibold px-4 py-1 cursor-pointer ${
+                selectedIndex === index
+                  ? "bg-primary/10 rounded-md text-primary"
+                  : "bg-transparent"
+              }`}
+              onClick={() => setSelectedIndex(index)}
+            >
+              {item}
+            </p>
+          </a>
         ))}
       </div>
       <div className="md:hidden">
@@ -55,15 +58,17 @@ function NavBar() {
                 key={index}
                 onClick={() => setSelectedIndex(index)}
               >
-                <p
-                  className={`text-md font-semibold px-4 py-1 cursor-pointer ${
-                    selectedIndex === index
-                      ? "bg-primary/10 rounded-md text-primary"
-                      : "bg-transparent"
-                  }`}
-                >
-                  {item}
-                </p>
+                <a href={Links[index]}>
+                  <p
+                    className={`text-md font-semibold px-4 py-1 cursor-pointer ${
+                      selectedIndex === index
+                        ? "bg-primary/10 rounded-md text-primary"
+                        : "bg-transparent"
+                    }`}
+                  >
+                    {item}
+                  </p>
+                </a>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

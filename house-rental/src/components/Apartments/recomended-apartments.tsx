@@ -39,7 +39,10 @@ const RecomenedApartments = () => {
   }
 
   return (
-    <div className="p-5 max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 my-10">
+    <div
+      id="property"
+      className="p-5 pt-20 max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 my-10"
+    >
       <div className="w-full">
         {apartments.length === 0 ? (
           <div></div>

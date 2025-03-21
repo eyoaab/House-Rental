@@ -27,11 +27,13 @@ export default function Header() {
   return (
     <header className="z-90 md:px-20 px-5 max-w-[1440px] mx-auto flex justify-between items-center p-4">
       <div className="flex items-center space-x-4 justify-between w-full">
-        <img
-          src="/logo.jpeg"
-          alt="logo"
-          className="lg:block hidden w-16 h-16 rounded-full mb-4 sm:mb-0"
-        />
+        <a href="#">
+          <img
+            src="/logo.jpeg"
+            alt="logo"
+            className="lg:block hidden w-16 h-16 rounded-full mb-4 sm:mb-0"
+          />
+        </a>
         <NavBar />
         {user?.username || userName ? (
           <div className="flex items-center space-x-4">

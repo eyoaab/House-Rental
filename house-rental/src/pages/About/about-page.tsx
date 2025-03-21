@@ -2,7 +2,10 @@ import { FaHome } from "react-icons/fa";
 
 export default function AboutPage() {
   return (
-    <div className="py-5 flex flex-col items-center max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5">
+    <div
+      id="about"
+      className="py-5 flex flex-col items-center max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5"
+    >
       <p className="text-[20px] font-bold text-secondary text-center my-5">
         Our Business Partners
       </p>

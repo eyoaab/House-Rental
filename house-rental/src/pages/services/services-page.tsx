@@ -24,7 +24,10 @@ const ServicesList = () => {
     },
   ];
   return (
-    <div className="scrollbar-hidden p-5 max-w-[1440px] mx-auto min-h-screen flex items-center justify-center flex-col overflow-x-clip relative">
+    <div
+      id="services"
+      className="scrollbar-hidden p-5 pt-20 max-w-[1440px] mx-auto min-h-screen flex items-center justify-center flex-col overflow-x-clip relative"
+    >
       <p className="text-4xl font-semibold text-center text-secondary">
         Our Services
       </p>

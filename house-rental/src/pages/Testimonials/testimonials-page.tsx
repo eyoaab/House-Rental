@@ -1,9 +1,7 @@
 import TestimonyCard from "./../../components/Testimonial/card";
-// import type { Testimony } from "../../types/testimony-type";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../state-managment/store";
-// import the arrow left and arrow right from react-icons
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { fetchTestimonies } from "@/state-managment/slices/testimony-slice";
 
@@ -45,7 +43,10 @@ const TestimonyList = () => {
   }
 
   return (
-    <div className="py-4 max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 my-10">
+    <div
+      id="testimonies"
+      className="py-4 pt-20 max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 my-10"
+    >
       <p className="text-4xl font-semibold text-center text-secondary">
         Testimonials
       </p>
