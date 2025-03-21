@@ -19,6 +19,13 @@ export default function LoginPage() {
   );
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!username || !password) {
+      toast.error("Please fill all the fields", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
     dispatch(loginUser({ username, password }));
   };
 

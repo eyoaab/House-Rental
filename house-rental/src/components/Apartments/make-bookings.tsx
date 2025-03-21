@@ -37,8 +37,6 @@ export default function DateRangeModal({
     // get the user id by decoding the token
     const decodedToken = JSON.parse(atob(token!.split(".")[1]));
     const userId = decodedToken.id;
-    console.log("userid");
-    console.log(userId);
     const bookApartment = async () => {
       try {
         const response = await Axios.post(

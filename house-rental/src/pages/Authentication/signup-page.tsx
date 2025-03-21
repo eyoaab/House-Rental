@@ -22,6 +22,14 @@ export default function SignUpPage() {
   // useSelector((state: RootState) => state.user);
   // useSelector((state: RootState) => state.user);
   function handleSubit() {
+    if (!firstName || !lastName || !userName || !password || !confirmPassword) {
+      toast.error("Please fill all the fields", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error("Password do not match!", {
         position: "top-right",
