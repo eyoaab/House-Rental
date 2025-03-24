@@ -52,7 +52,7 @@ export default function SignUpPage() {
         autoClose: 3000,
       });
       // Navigate to login page after a delay
-      const timer = setTimeout(() => navigate("/login"), 1000);
+      const timer = setTimeout(() => navigate("/"), 1000);
       return () => clearTimeout(timer); // Cleanup timeout on component unmount
     }
 
