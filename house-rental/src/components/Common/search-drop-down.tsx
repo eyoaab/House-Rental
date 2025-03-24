@@ -1,15 +1,29 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PropertySearch({
+  isFromHomePage,
   onTypeSelect,
   onLocationSelect,
   onCatagorySelect,
+  onIsFor,
+  selectedLocation,
+  selectedCatagory,
+  selectedType,
+  isFor,
 }: {
+  isFromHomePage: boolean;
+  selectedLocation: string;
+  selectedCatagory: string;
+  selectedType: string;
+  isFor: string;
+  onIsFor: (isFor: string) => void;
   onTypeSelect: (type: string) => void;
   onLocationSelect: (location: string) => void;
   onCatagorySelect: (category: string) => void;
 }) {
-  const [activeType, setActiveType] = useState("");
+  const [activeType, setActiveType] = useState(isFor || "");
+  const navigate = useNavigate();
 
   return (
     <div className="mt-1 md:mt-0 p-4 shadow-sm border border-gray-300 rounded-lg flex flex-col items-start max-w-[1440px] mx-auto bg-white mb-3">
@@ -23,6 +37,7 @@ export default function PropertySearch({
           onClick={() => {
             setActiveType("sell");
             onTypeSelect("sell");
+            onIsFor("sell");
           }}
         >
           For Sell
@@ -36,6 +51,7 @@ export default function PropertySearch({
           onClick={() => {
             setActiveType("rent");
             onTypeSelect("rent");
+            onIsFor("rent");
           }}
         >
           For Rent
@@ -72,14 +88,21 @@ export default function PropertySearch({
 
         <div
           onClick={() => {
-            setActiveType("");
-            onTypeSelect("");
-            onLocationSelect("");
-            onCatagorySelect("");
+            if (isFromHomePage) {
+              navigate(
+                `/apartments?location=${selectedLocation}&category=${selectedCatagory}&type=${selectedType}&isFor=${activeType}`
+              );
+            } else {
+              setActiveType("");
+              onTypeSelect("");
+              onLocationSelect("");
+              onCatagorySelect("");
+              onIsFor("");
+            }
           }}
           className="px-6 w-full sm:w-max flex items-center justify-center cursor-pointer bg-primary text-white transition-all duration-300 hover:bg-primary-dark"
         >
-          Reset
+          {isFromHomePage ? "Search" : "Reset"}
         </div>
       </div>
     </div>

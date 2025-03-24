@@ -8,6 +8,7 @@ import { ApartmentDetailsDialog } from "../../components/Apartments/dialog";
 import { ErrorDisplay } from "../../components/Apartments/error-page";
 import { LoadingGrid } from "../../components/Apartments/loading-grid";
 import PropertySearch from "@/components/Common/search-drop-down";
+import { useSearchParams } from "react-router-dom";
 
 const ApartmentsList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,10 +16,17 @@ const ApartmentsList = () => {
     (state: RootState) => state.apartments
   );
 
-  // State for filters
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedCatagory, setSelectedcatagory] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
+  const [searchParams] = useSearchParams();
+  const [selectedType, setSelectedType] = useState(
+    searchParams.get("type") || ""
+  );
+  const [selectedCatagory, setSelectedcatagory] = useState(
+    searchParams.get("category") || ""
+  );
+  const [selectedLocation, setSelectedLocation] = useState(
+    searchParams.get("location") || ""
+  );
+  const [isFor, setIsFor] = useState(searchParams.get("isFor") || ""); // to truck whther it is for rent or sell
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedApartment, setSelectedApartment] = useState<Apartment | null>(
@@ -33,6 +41,9 @@ const ApartmentsList = () => {
   };
   const handleCatagorySelect = (category: string) => {
     setSelectedcatagory(category);
+  };
+  const handleIsFor = (isFor: string) => {
+    setIsFor(isFor);
   };
 
   // // Filter apartments based on search criteria
@@ -69,7 +80,23 @@ const ApartmentsList = () => {
     setSelectedApartment(null);
   };
 
-  if (loading) return <LoadingGrid />;
+  if (loading)
+    return (
+      <div className="flex flex-col items-center justify-start w-full h-full">
+        <PropertySearch
+          isFromHomePage={false}
+          selectedLocation={selectedLocation}
+          selectedCatagory={selectedCatagory}
+          selectedType={selectedType}
+          onTypeSelect={handleTypeSelect}
+          onLocationSelect={handleLocationSelect}
+          onCatagorySelect={handleCatagorySelect}
+          onIsFor={handleIsFor}
+          isFor={isFor}
+        />
+        <LoadingGrid />;
+      </div>
+    );
 
   if (error) {
     return (
@@ -81,9 +108,15 @@ const ApartmentsList = () => {
     <div className=" w-full bg-white min-h-full mb-30 pb-4 ">
       <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
         <PropertySearch
+          isFromHomePage={false}
+          selectedLocation={selectedLocation}
+          selectedCatagory={selectedCatagory}
+          selectedType={selectedType}
           onTypeSelect={handleTypeSelect}
           onLocationSelect={handleLocationSelect}
           onCatagorySelect={handleCatagorySelect}
+          onIsFor={handleIsFor}
+          isFor={isFor}
         />
         <div className="h-6"></div>
 
