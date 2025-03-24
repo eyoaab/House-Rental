@@ -105,8 +105,8 @@ const ApartmentsList = () => {
   }
 
   return (
-    <div className=" w-full bg-white min-h-full mb-30 pb-4 ">
-      <div className="p-5 max-w-[1440px] mx-auto flex items-center justify-center flex-col bg-white">
+    <div className="min-w-screen bg-white min-h-full mb-30 py-5 mt-5 md:mt-24">
+      <div className="p-5  flex items-center justify-center flex-col bg-white">
         <PropertySearch
           isFromHomePage={false}
           selectedLocation={selectedLocation}

@@ -5,7 +5,7 @@ export default function HeroPage(): JSX.Element {
   return (
     <div
       id="/"
-      className="max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 text-secondary md:flex md:items-center md:justify-between"
+      className="max-w-[1440px] pt-20 mx-auto lg:px-20 md:px-15 sm:px-10 px-5 text-secondary md:flex md:items-center md:justify-between"
     >
       {/* first column */}
       <div className="order-2 md:order-1 flex flex-col items-start space-y-4 md:w-1/2">
