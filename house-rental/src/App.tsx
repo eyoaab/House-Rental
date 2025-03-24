@@ -9,17 +9,20 @@ import PageNotFound from "./components/Common/page-not-found";
 import ApartmentsList from "./pages/Apartments/apartments-page";
 import { ToastContainer } from "react-toastify";
 import NewssList from "./pages/News/all-news";
+import BasicLayout from "./layout/basic-layout";
 const App: React.FC = () => {
   return (
     <>
       <ToastContainer />
       <Router>
         <Routes>
-          <Route path="/" element={<MainLayout />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/apartments" element={<ApartmentsList />} />
-          <Route path="/news" element={<NewssList />} />
+          <Route path="/" element={<BasicLayout />}>
+            <Route index element={<MainLayout />} />
+            <Route path="/apartments" element={<ApartmentsList />} />
+            <Route path="/news" element={<NewssList />} />
+          </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

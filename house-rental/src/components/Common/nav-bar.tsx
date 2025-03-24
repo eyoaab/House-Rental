@@ -1,5 +1,6 @@
 import { useState } from "react";
 // import { div } from "@/components/ui/div";
+import { Link } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,14 +10,14 @@ import {
 
 function NavBar() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const menuItems = ["About", "Property", "Services", "Blogs"];
-  const Links = ["#about", "#property", "#services", "#blogs"];
+  const menuItems = ["Home", "Property", "Services", "Blogs"];
+  const Links = ["/", "/apartments", "/services", "/news"];
 
   return (
     <nav className="text-sm flex justify-between items-center z-[100] bg-black/50 text-white p-2 shadow-md shadow-gray-200 rounded-md border border-gray-50 md:bg-white md:text-secondary">
       <div className="hidden md:flex space-x-4">
         {menuItems.map((item, index) => (
-          <a href={Links[index]}>
+          <Link to={Links[index]}>
             <p
               key={index}
               className={`text-md font-semibold px-4 py-1 cursor-pointer ${
@@ -28,7 +29,7 @@ function NavBar() {
             >
               {item}
             </p>
-          </a>
+          </Link>
         ))}
       </div>
       <div className="md:hidden">
@@ -58,7 +59,7 @@ function NavBar() {
                 key={index}
                 onClick={() => setSelectedIndex(index)}
               >
-                <a href={Links[index]}>
+                <Link to={Links[index]}>
                   <p
                     className={`text-md font-semibold px-4 py-1 cursor-pointer ${
                       selectedIndex === index
@@ -68,7 +69,7 @@ function NavBar() {
                   >
                     {item}
                   </p>
-                </a>
+                </Link>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

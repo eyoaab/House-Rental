@@ -40,10 +40,7 @@ const NewsPage = () => {
   }
 
   return (
-    <div
-      id="blogs"
-      className="container pb-5 pt-20 flex flex-col items-center max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5"
-    >
+    <div className="container pb-5 pt-20 flex flex-col items-center max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5">
       <p className="text-4xl font-semibold text-center text-secondary">
         Latest News Feeds
       </p>
