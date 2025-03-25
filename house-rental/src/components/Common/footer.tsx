@@ -4,7 +4,7 @@ import {
   FaInstagram,
   FaYoutube,
 } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="border-t-1 border-gray-200 text-secondary py-10 max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5 ">
@@ -54,19 +54,19 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
             <ul className="text-sm text-gray-700 space-y-2">
               <li>
-                <a href="#property">Properties</a>
+                <Link to="/apartments">Properties</Link>
               </li>
               <li>
-                <a href="#blogs">News</a>
+                <Link to="/news">News</Link>
               </li>
               <li>
-                <a href="#about">About</a>
+                <Link to="/about">About</Link>
               </li>
               <li>
-                <a href="#testimonies">Testimonies</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <a href="#services">Services</a>
+                <Link to="/services">Services</Link>
               </li>
             </ul>
           </div>

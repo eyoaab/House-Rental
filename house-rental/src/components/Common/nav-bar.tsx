@@ -39,7 +39,7 @@ function NavBar({ navItems = [] }) {
             <div
               // variant={selectedIndex === index ? "default" : "ghost"}
               className={cn(
-                "text-md font-medium border-none transition-all duration-200 rounded-md px-3 py-1 cursor-pointer",
+                " text-md font-medium border-none transition-all duration-300 rounded-md px-3 py-1 cursor-pointer",
                 selectedIndex === index
                   ? "bg-primary text-white border-none "
                   : "hover:bg-white/5  text-secondary hover:text-primary"
