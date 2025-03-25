@@ -23,7 +23,7 @@ export default function Header({ logoSrc = "/logo.jpeg", navItems = [] }) {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-lg shadow-sm shadow-gray-800/50 py-2">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm shadow-gray-800/50 py-2">
       <div className="max-w-[1440px] mx-auto  px-2 sm:px-3 lg:px-8 lg:py-2">
         <div className="flex items-center justify-between">
           {/* Logo */}

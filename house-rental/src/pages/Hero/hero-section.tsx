@@ -3,6 +3,7 @@ import { FaHome } from "react-icons/fa";
 import type { AppDispatch } from "../../state-managment/store";
 import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function HeroPage(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +33,9 @@ export default function HeroPage(): JSX.Element {
           </p>
         </div>
         <div className="bg-primary text-white px-5 py-2 rounded-lg mt-5 cursor-pointer hover:bg-primary-dark transition">
-          <p>Find your home</p>
+          <Link to="/apartments">
+            <p>Find your home</p>
+          </Link>
         </div>
       </div>
       {/* second column */}

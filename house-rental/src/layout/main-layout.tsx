@@ -1,8 +1,6 @@
 import React from "react";
 import HeroPage from "@/pages/Hero/hero-section";
-import AboutPage from "@/pages/About/about-page";
 import RecomenedApartments from "@/components/Apartments/recomended-apartments";
-import ServicesList from "@/pages/services/services-page";
 import TestimonyList from "@/pages/Testimonials/testimonials-page";
 import NewsPage from "@/pages/News/news-page";
 import { useState } from "react";
@@ -37,9 +35,9 @@ const App: React.FC = () => {
         isFor={isFor}
         onIsFor={setIsFor}
       />
-      <AboutPage />
+      {/* <AboutPage /> */}
       <RecomenedApartments />
-      <ServicesList />
+      {/* <ServicesList /> */}
       <TestimonyList />
       <NewsPage />
     </div>

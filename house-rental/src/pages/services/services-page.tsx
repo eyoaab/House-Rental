@@ -1,6 +1,10 @@
 import { ServiceCard } from "../../components/services/card";
 import { Service } from "../../types/service-type";
 import { Home } from "lucide-react";
+import type { AppDispatch } from "../../state-managment/store";
+import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const ServicesList = () => {
   const services: Service[] = [
@@ -23,10 +27,14 @@ const ServicesList = () => {
       imageUrl: "/image4.jpeg",
     },
   ];
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(setSelectedIndex(3));
+  }, [dispatch]);
   return (
     <div
       id="services"
-      className="scrollbar-hidden p-5 pt-20 max-w-[1440px] mx-auto min-h-screen flex items-center justify-center flex-col overflow-x-clip relative"
+      className="scrollbar-hidden p-5 py-20 max-w-[1440px] mx-auto min-h-screen flex items-center justify-center flex-col overflow-x-clip relative"
     >
       <p className="text-4xl font-semibold text-center text-secondary">
         Our Services

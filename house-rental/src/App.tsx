@@ -10,6 +10,8 @@ import ApartmentsList from "./pages/Apartments/apartments-page";
 import { ToastContainer } from "react-toastify";
 import NewssList from "./pages/News/all-news";
 import BasicLayout from "./layout/basic-layout";
+import AboutPage from "./pages/About/about-page";
+import ServicesList from "./pages/services/services-page";
 const App: React.FC = () => {
   return (
     <>
@@ -22,6 +24,8 @@ const App: React.FC = () => {
             <Route index element={<MainLayout />} />
             <Route path="/apartments" element={<ApartmentsList />} />
             <Route path="/news" element={<NewssList />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesList />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

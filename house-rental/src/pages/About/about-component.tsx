@@ -1,118 +1,11 @@
 import { FaHome } from "react-icons/fa";
-import type { AppDispatch } from "../../state-managment/store";
-import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 
 export default function AboutPage() {
-  const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(setSelectedIndex(2));
-  }, [dispatch]);
   return (
     <div
       id="about"
-      className="py-5 mt-25 flex flex-col items-center max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5"
+      className="py-5 flex flex-col items-center max-w-[1440px] mx-auto lg:px-20 md:px-15 sm:px-10 px-5"
     >
-      {/* the about part */}
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
-        {/* first column */}
-        <div className="relative rounded-xl flex flex-col items-start justify-center w-full lg:w-2/5 lg:px-5 p-3 bg-gray-100 hidden sm:block">
-          {/* Image */}
-          <img
-            src="./about.jpeg"
-            alt="about"
-            className="w-full h-60 sm:h-80 lg:h-96 rounded-xl object-cover"
-          />
-
-          {/* Red Curved Border */}
-          <div className="absolute -top-4 -right-4 h-40 w-40 border-t-8 border-r-8 border-primary rounded-tr-xl"></div>
-        </div>
-
-        {/* second column */}
-        <div className="flex flex-col items-start justify-center w-full">
-          <p className="flex items-center justify-center bg-primary/20 text-primary text-[14px] font-semibold px-3 gray-700ded-md">
-            About Us
-          </p>
-          <h3 className="text-secondary text-left my-3 text-[30px] sm:text-[40px] font-bold">
-            The Leading Real State Property Marketplace
-          </h3>
-          <p className="text-left text-gray-700 text-[14px] sm:text-[16px]">
-            We specialize in connecting buyers, sellers, and renters with the
-            perfect properties. From luxurious homes to affordable apartments,
-            our platform offers a wide range of real estate options tailored to
-            meet your needs. Experience seamless transactions and expert
-            guidance every step of the way.
-          </p>
-          {/* the property section */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full my-10">
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Reliable Agents
-              </p>
-            </div>
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Verified Listings
-              </p>
-            </div>
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                24/7 Support
-              </p>
-            </div>
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Easy Financing
-              </p>
-            </div>
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Secure Transactions
-              </p>
-            </div>
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Affordable Prices
-              </p>
-            </div>
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Modern Architecture
-              </p>
-            </div>
-            <div className="flex items-center">
-              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                <FaHome className="text-primary inline" />
-              </span>
-              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
-                Expert Guidance
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
       <p className="text-[20px] font-bold text-secondary text-center my-5">
         Our Business Partners
       </p>
@@ -153,6 +46,77 @@ export default function AboutPage() {
             alt="partner3"
             className="h-24 w-24 sm:h-20 sm:w-20"
           />
+        </div>
+      </div>
+      {/* the about part */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
+        {/* first column */}
+        <div className="relative rounded-xl flex flex-col items-start justify-center w-full lg:w-2/5 lg:px-5 p-3 bg-gray-100 hidden sm:block">
+          {/* Image */}
+          <img
+            src="./about.jpeg"
+            alt="about"
+            className="w-full h-60 sm:h-80 lg:h-96 rounded-xl object-cover"
+          />
+
+          {/* Red Curved Border */}
+          <div className="absolute -top-4 -right-4 h-40 w-40 border-t-8 border-r-8 border-primary rounded-tr-xl"></div>
+        </div>
+
+        {/* second column */}
+        <div className="flex flex-col items-start justify-center w-full">
+          <p className="flex items-center justify-center bg-primary/20 text-primary text-[14px] font-semibold px-3 gray-700ded-md">
+            About Us
+          </p>
+          <h3 className="text-secondary text-left my-3 text-[30px] sm:text-[40px] font-bold">
+            The Leading Real State Property Marketplace
+          </h3>
+          <p className="text-left text-gray-700 text-[14px] sm:text-[16px]">
+            We specialize in connecting buyers, sellers, and renters with the
+            perfect properties. From luxurious homes to affordable apartments,
+            our platform offers a wide range of real estate options tailored to
+            meet your needs. Experience seamless transactions and expert
+            guidance every step of the way.
+          </p>
+          {/* the property section */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full my-10">
+            <div className="flex items-center">
+              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
+                <FaHome className="text-primary inline" />
+              </span>
+              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
+                Releable Agents
+              </p>
+            </div>
+            <div className="flex items-center">
+              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
+                <FaHome className="text-primary inline" />
+              </span>
+              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
+                Affordable Prices
+              </p>
+            </div>
+            <div className="flex items-center">
+              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
+                <FaHome className="text-primary inline" />
+              </span>
+              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
+                Modern Architecture
+              </p>
+            </div>
+            <div className="flex items-center">
+              <span className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
+                <FaHome className="text-primary inline" />
+              </span>
+              <p className="text-[14px] font-semibold text-gray-700 inline pl-4">
+                Expert Guidance
+              </p>
+            </div>
+          </div>
+          {/* the button section */}
+          <div className="flex items-center justify-center border border-primary rounded-md p-2 text-secondary font-semibold cursor-pointer hover:bg-primary hover:text-white transition">
+            Learn more
+          </div>
         </div>
       </div>
     </div>

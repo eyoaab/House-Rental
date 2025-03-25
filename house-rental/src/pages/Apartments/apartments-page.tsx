@@ -9,9 +9,13 @@ import { ErrorDisplay } from "../../components/Apartments/error-page";
 import { LoadingGrid } from "../../components/Apartments/loading-grid";
 import PropertySearch from "@/components/Common/search-drop-down";
 import { useSearchParams } from "react-router-dom";
+import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
 
 const ApartmentsList = () => {
   const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(setSelectedIndex(1));
+  }, [dispatch]);
   const { apartments, loading, error } = useSelector(
     (state: RootState) => state.apartments
   );
