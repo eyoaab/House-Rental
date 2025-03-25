@@ -10,6 +10,8 @@ import {
 import { Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 import Axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface DateRangeModalProps {
   open: boolean;
@@ -22,21 +24,21 @@ export default function DateRangeModal({
   setOpen,
   apartment,
 }: DateRangeModalProps) {
-  const [startDate, setStartDate] = useState<string | null>(null);
-  const [endDate, setEndDate] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleConfirm = async () => {
     setLoading(true);
-    // check if thee is a token in thelocal storage
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("You need to login to book an apartment");
       setOpen(false);
+      return;
     }
-    // get the user id by decoding the token
-    const decodedToken = JSON.parse(atob(token!.split(".")[1]));
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
     const userId = decodedToken.id;
+
     const bookApartment = async () => {
       try {
         const response = await Axios.post(
@@ -44,11 +46,11 @@ export default function DateRangeModal({
           {
             userId: userId,
             apartmentId: apartment.id,
-            startDate: startDate,
-            endDate: endDate,
+            startDate: startDate?.toISOString(),
+            endDate: endDate?.toISOString(),
             totalPrice:
               apartment.price *
-              ((new Date(endDate!).getTime() - new Date(startDate!).getTime()) /
+              ((endDate!.getTime() - startDate!.getTime()) /
                 (1000 * 60 * 60 * 24)),
           },
           {
@@ -83,20 +85,27 @@ export default function DateRangeModal({
         <div className="flex flex-col gap-4">
           <div>
             <p className="mb-2 text-sm font-semibold">Start Date</p>
-            <input
-              type="date"
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
               className="border p-2 rounded w-full"
-              value={startDate || ""}
-              onChange={(e) => setStartDate(e.target.value)}
+              placeholderText="Select start date"
             />
           </div>
           <div>
             <p className="mb-2 text-sm font-semibold">End Date</p>
-            <input
-              type="date"
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate || undefined}
               className="border p-2 rounded w-full"
-              value={endDate || ""}
-              onChange={(e) => setEndDate(e.target.value)}
+              placeholderText="Select end date"
             />
           </div>
         </div>

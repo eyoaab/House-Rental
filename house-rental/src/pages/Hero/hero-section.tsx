@@ -1,7 +1,14 @@
-import { JSX } from "react";
+import { JSX, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
+import type { AppDispatch } from "../../state-managment/store";
+import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
+import { useDispatch } from "react-redux";
 
 export default function HeroPage(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(setSelectedIndex(0));
+  }, [dispatch]);
   return (
     <div
       id="/"

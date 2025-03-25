@@ -5,6 +5,7 @@ import type { RootState, AppDispatch } from "../../state-managment/store";
 import { News } from "@/types/news-type";
 import NewsCard from "@/components/News/news-card";
 import { NewsDetailsDialog } from "@/components/News/dialog";
+import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
 
 import { ErrorDisplay } from "../../components/Apartments/error-page";
 import { LoadingGrid } from "../../components/Apartments/loading-grid";
@@ -24,6 +25,9 @@ const NewssList = () => {
       dispatch(fetchNews());
     }
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(setSelectedIndex(4));
+  }, [dispatch]);
 
   const handleViewDetails = (apartment: News) => {
     setSelectedNews(apartment);
@@ -42,7 +46,7 @@ const NewssList = () => {
   }
 
   return (
-    <div className="max-w-[1440px] mx-auto bg-white min-h-full overflow-x-hidden mb-30 pb-4 pt-20 ">
+    <div className="min-w-full mx-auto bg-white min-h-full overflow-x-hidden mb-30 pb-4 pt-20 ">
       <div className="px-4 items-center justify-center flex-col bg-white">
         <h1 className="text-4xl text-center font-medium text-secondary my-3">
           All News
