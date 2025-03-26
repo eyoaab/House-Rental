@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchApartments } from "../../state-managment/slices/apartments-slice";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../state-managment/store";
 import type { Apartment } from "../../types/apartment-type";
 import { ApartmentCard } from "../../components/Apartments/card";
