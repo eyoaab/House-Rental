@@ -1,6 +1,6 @@
 // types.ts
 export interface News {
-  id: number;
+  id: string;
   title: string;
   description: string;
   imageUrl: String;

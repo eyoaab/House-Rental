@@ -12,18 +12,23 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { News } from "@/components/Admin/admin-dashboard";
-
+import type { News } from "@/types/news-type";
 const formSchema = z.object({
+  id: z.string().optional(),
   title: z.string().min(2, {
     message: "Title must be at least 2 characters.",
   }),
   description: z.string().min(10, {
     message: "Description must be at least 10 characters.",
   }),
-  imageUrl: z.string().url({
-    message: "Please enter a valid URL for the image.",
-  }),
+  imageUrl: z
+    .string()
+    .min(1, {
+      message: "Image URL is required.",
+    })
+    .url({
+      message: "Please enter a valid URL for the image.",
+    }),
   date: z.string().min(1, {
     message: "Date is required.",
   }),
@@ -37,16 +42,13 @@ interface NewsFormProps {
 export function NewsForm({ news, onSubmit }: NewsFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: news
-      ? {
-          ...news,
-        }
-      : {
-          title: "",
-          description: "",
-          imageUrl: "",
-          date: new Date().toISOString().split("T")[0],
-        },
+    defaultValues: {
+      id: "",
+      title: "",
+      description: "",
+      imageUrl: "",
+      date: new Date().toISOString().split("T")[0],
+    },
   });
 
   function handleSubmit(values: z.infer<typeof formSchema>) {
