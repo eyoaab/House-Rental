@@ -118,7 +118,7 @@ export function NewsForm({ news, onSubmit }: NewsFormProps) {
           )}
         />
 
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-4 text-white">
           <Button type="submit">{news ? "Update" : "Create"} News</Button>
         </div>
       </form>

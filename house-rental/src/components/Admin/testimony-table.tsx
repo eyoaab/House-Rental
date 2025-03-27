@@ -31,24 +31,24 @@ export function TestimonyTable({
   onDelete,
 }: TestimonyTableProps) {
   return (
-    <div className="rounded-lg border shadow-sm overflow-hidden bg-white">
+    <div className="rounded-lg border shadow-sm overflow-hidden bg-white  border-gray-200">
       <div className="overflow-x-auto">
         <Table className="w-full min-w-[640px]">
           <TableHeader className="bg-gray-50">
-            <TableRow className="border-b">
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[80px]">
+            <TableRow className="border-b border-gray-200">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[80px]">
                 User
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[150px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[150px]">
                 Name
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[120px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[120px]">
                 Rating
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary">
                 Description
               </TableHead>
-              <TableHead className="px-6 py-4 text-right font-semibold text-gray-900 w-[80px]"></TableHead>
+              <TableHead className="px-6 py-4 text-right font-semibold text-secondary w-[80px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -71,9 +71,9 @@ export function TestimonyTable({
                 <TableRow
                   key={testimony.id}
                   className={cn(
-                    "border-b last:border-b-0",
+                    "border-b last:border-b-0 border-gray-200",
                     index % 2 === 0 ? "bg-white" : "bg-gray-50",
-                    "hover:bg-gray-100 transition-colors duration-200"
+                    "hover:bg-gray-50 transition-colors duration-200"
                   )}
                 >
                   <TableCell className="px-6 py-4">
@@ -88,7 +88,7 @@ export function TestimonyTable({
                       </AvatarFallback>
                     </Avatar>
                   </TableCell>
-                  <TableCell className="px-6 py-4 font-medium text-gray-900 truncate max-w-[150px]">
+                  <TableCell className="px-6 py-4 font-medium text-secondary truncate max-w-[150px]">
                     <span title={testimony.name}>{testimony.name}</span>
                   </TableCell>
                   <TableCell className="px-6 py-4">
@@ -100,17 +100,20 @@ export function TestimonyTable({
                             "h-4 w-4",
                             i < testimony.rate
                               ? "text-yellow-400 fill-yellow-400"
-                              : "text-gray-300"
+                              : "text-gray-600"
                           )}
                         />
                       ))}
-                      <span className="text-gray-400 text-xs ml-1">
+                      {/* <span className="text-gray-400 text-xs ml-1">
                         ({testimony.rate})
-                      </span>
+                      </span> */}
                     </div>
                   </TableCell>
-                  <TableCell className="px-6 py-4 text-gray-700 max-w-0">
-                    <div className="truncate" title={testimony.description}>
+                  <TableCell className="px-6 py-4 text-md text-secondary max-w-0">
+                    <div
+                      className="truncate font-medium text-secondary"
+                      title={testimony.description}
+                    >
                       {testimony.description}
                     </div>
                   </TableCell>

@@ -263,10 +263,8 @@ export function ApartmentForm({ apartment, onSubmit }: ApartmentFormProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="bg-white text-secondary">
-                    <SelectItem value="Available">Available</SelectItem>
-                    <SelectItem value="Rented">Rented</SelectItem>
-                    <SelectItem value="Maintenance">Maintenance</SelectItem>
-                    <SelectItem value="Reserved">Reserved</SelectItem>
+                    <SelectItem value="Available">Sell</SelectItem>
+                    <SelectItem value="Rented">Rent</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -390,7 +388,7 @@ export function ApartmentForm({ apartment, onSubmit }: ApartmentFormProps) {
           )}
         />
 
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-4 text-white">
           <Button type="submit">
             {apartment ? "Update" : "Create"} Apartment
           </Button>

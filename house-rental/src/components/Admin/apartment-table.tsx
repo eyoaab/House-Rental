@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils"; // Assuming you have a utility for classNames
+import { cn } from "@/lib/utils";
 
 interface ApartmentTableProps {
   apartments: Apartment[];
@@ -31,33 +31,33 @@ export function ApartmentTable({
   onDelete,
 }: ApartmentTableProps) {
   return (
-    <div className="rounded-lg border shadow-sm overflow-hidden bg-white">
+    <div className="rounded-lg border shadow-sm overflow-hidden bg-white borde border-gray-200">
       <div className="overflow-x-auto">
         <Table className="w-full min-w-[640px]">
           <TableHeader className="bg-gray-50">
-            <TableRow className="border-b">
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[80px]">
+            <TableRow className="border-b border-gray-500">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[80px]">
                 Image
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[200px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[200px]">
                 Title
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[180px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[180px]">
                 Location
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[100px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[100px]">
                 Rooms
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[120px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[120px]">
                 Price
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[120px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[120px]">
                 Status
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[100px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[100px]">
                 Rating
               </TableHead>
-              <TableHead className="px-6 py-4 text-right font-semibold text-gray-900 w-[80px]"></TableHead>
+              <TableHead className="px-6 py-4 text-right font-semibold text-secondary w-[80px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -80,7 +80,7 @@ export function ApartmentTable({
                 <TableRow
                   key={apartment.id}
                   className={cn(
-                    "border-b last:border-b-0",
+                    "border-b last:border-b-0 border-gray-300",
                     index % 2 === 0 ? "bg-white" : "bg-gray-50",
                     "hover:bg-gray-100 transition-colors duration-200"
                   )}
@@ -92,7 +92,7 @@ export function ApartmentTable({
                       className="h-12 w-12 object-cover rounded-md"
                     />
                   </TableCell>
-                  <TableCell className="px-6 py-4 font-medium text-gray-900 truncate max-w-[200px]">
+                  <TableCell className="px-6 py-4 font-medium text-secondary truncate max-w-[200px]">
                     <span title={apartment.title}>{apartment.title}</span>
                   </TableCell>
                   <TableCell className="px-6 py-4 text-gray-700 truncate max-w-[180px]">
@@ -110,9 +110,9 @@ export function ApartmentTable({
                     <Badge
                       className={cn(
                         "font-medium",
-                        apartment.status === "Available"
+                        apartment.status.toLocaleLowerCase() === "sell"
                           ? "bg-green-100 text-green-800"
-                          : "bg-gray-100 text-gray-800"
+                          : "bg-gray-100 text-primary"
                       )}
                     >
                       {apartment.status}

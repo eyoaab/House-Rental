@@ -69,12 +69,12 @@ export default function AdminDashboard() {
   );
 
   return (
-    <div className="container mx-auto py-10 text-secondary">
+    <div className="container mx-auto py-30 text-secondary">
       <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
 
       <div className="flex flex-col space-y-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Apartments Section */}
-        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border border-none">
           <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 bg-gradient-to-r from-gray-50 to-white">
             <div className="space-y-1">
               <CardTitle className="text-2xl font-bold text-gray-900">
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
             </div>
             <Button
               onClick={() => setIsAddApartmentOpen(true)}
-              className="bg-primary hover:bg-primary transition-colors duration-200 w-full sm:w-auto"
+              className="bg-primary  text-white  transition-colors duration-200 w-full sm:w-auto"
             >
               <PlusCircle className="mr-2 h-5 w-5" />
               Add Apartment
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* News Section */}
-        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 border  border-gray-300">
           <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 bg-gradient-to-r from-gray-50 to-white">
             <div className="space-y-1">
               <CardTitle className="text-2xl font-bold text-gray-900">
@@ -117,7 +117,7 @@ export default function AdminDashboard() {
             </div>
             <Button
               onClick={() => setIsAddNewsOpen(true)}
-              className="bg-primary hover:bg-primary transition-colors duration-200 w-full sm:w-auto"
+              className="bg-primary  text-white  transition-colors duration-200 w-full sm:w-auto"
             >
               <PlusCircle className="mr-2 h-5 w-5" />
               Add News
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Testimonies Section */}
-        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300  border  border-gray-300">
           <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 bg-gradient-to-r from-gray-50 to-white">
             <div className="space-y-1">
               <CardTitle className="text-2xl font-bold text-gray-900">
@@ -148,7 +148,7 @@ export default function AdminDashboard() {
             </div>
             <Button
               onClick={() => setIsAddTestimonyOpen(true)}
-              className="bg-primary hover:bg-primary transition-colors duration-200 w-full sm:w-auto"
+              className="bg-primary text-white transition-colors duration-200 w-full sm:w-auto"
             >
               <PlusCircle className="mr-2 h-5 w-5" />
               Add Testimony

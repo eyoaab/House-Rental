@@ -21,26 +21,26 @@ import { cn } from "@/lib/utils"; // Assuming you have a utility for classNames
 interface NewsTableProps {
   news: News[];
   onEdit: (news: News) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 export function NewsTable({ news, onEdit, onDelete }: NewsTableProps) {
   return (
-    <div className="rounded-lg border shadow-sm overflow-hidden bg-white">
+    <div className="rounded-lg  shadow-sm overflow-hidden bg-white border border-gray-200">
       <div className="overflow-x-auto">
         <Table className="w-full min-w-[640px]">
           <TableHeader className="bg-gray-50">
-            <TableRow className="border-b">
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[120px]">
+            <TableRow className="border-b border-gray-400">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[120px]">
                 Image
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[300px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[300px]">
                 Title
               </TableHead>
-              <TableHead className="px-6 py-4 text-left font-semibold text-gray-900 w-[150px]">
+              <TableHead className="px-6 py-4 text-left font-semibold text-secondary w-[150px]">
                 Date
               </TableHead>
-              <TableHead className="px-6 py-4 text-right font-semibold text-gray-900 w-[80px]"></TableHead>
+              <TableHead className="px-6 py-4 text-right font-semibold text-secondary w-[80px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -65,7 +65,7 @@ export function NewsTable({ news, onEdit, onDelete }: NewsTableProps) {
                 <TableRow
                   key={item.id}
                   className={cn(
-                    "border-b last:border-b-0",
+                    "border-b last:border-b-0 border-gray-300",
                     index % 2 === 0 ? "bg-white" : "bg-gray-50",
                     "hover:bg-gray-100 transition-colors duration-200"
                   )}
@@ -83,7 +83,7 @@ export function NewsTable({ news, onEdit, onDelete }: NewsTableProps) {
                       />
                     </div>
                   </TableCell>
-                  <TableCell className="px-6 py-4 font-medium text-gray-900 truncate max-w-[300px]">
+                  <TableCell className="px-6 py-4 font-medium text-secondary truncate max-w-[300px]">
                     <span title={item.title}>{item.title}</span>
                   </TableCell>
                   <TableCell className="px-6 py-4 text-gray-700">
