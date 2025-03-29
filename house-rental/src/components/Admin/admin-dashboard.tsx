@@ -177,7 +177,7 @@ export default function AdminDashboard() {
             </DialogDescription>
           </DialogHeader>
           {/* <ApartmentForm onSubmit={addApartment} */}
-          <ApartmentForm onSubmit={() => {}} />
+          <ApartmentForm />
         </DialogContent>
       </Dialog>
 
@@ -191,13 +191,7 @@ export default function AdminDashboard() {
             <DialogTitle>Edit Apartment</DialogTitle>
             <DialogDescription>Update the apartment details.</DialogDescription>
           </DialogHeader>
-          {editingApartment && (
-            <ApartmentForm
-              apartment={editingApartment}
-              // onSubmit={updateApartment}
-              onSubmit={() => {}}
-            />
-          )}
+          {editingApartment && <ApartmentForm />}
         </DialogContent>
       </Dialog>
 

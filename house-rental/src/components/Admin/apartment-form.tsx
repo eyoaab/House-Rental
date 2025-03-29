@@ -1,20 +1,5 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import type { Apartment } from "@/types/apartment-type";
 import {
   Select,
   SelectContent,
@@ -23,6 +8,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const features = [
   { id: "pool", label: "Pool" },
@@ -35,400 +23,226 @@ const features = [
   { id: "wifi", label: "WiFi" },
 ];
 
-const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
-  }),
-  description: z.string().min(10, {
-    message: "Description must be at least 10 characters.",
-  }),
-  location: z.string().min(2, {
-    message: "Location is required.",
-  }),
-  noRoom: z.string().min(1, {
-    message: "Number of rooms is required.",
-  }),
-  noBathRoom: z.string().min(1, {
-    message: "Number of bathrooms is required.",
-  }),
-  area: z.string().min(1, {
-    message: "Area is required.",
-  }),
-  features: z.array(z.string()).min(1, {
-    message: "Select at least one feature.",
-  }),
-  price: z.coerce.number().positive({
-    message: "Price must be a positive number.",
-  }),
-  availableFrom: z.string().min(1, {
-    message: "Available from date is required.",
-  }),
-  availableTo: z.string().min(1, {
-    message: "Available to date is required.",
-  }),
-  imageUrl: z.string().url({
-    message: "Please enter a valid URL for the image.",
-  }),
-  status: z.string().min(1, {
-    message: "Status is required.",
-  }),
-  catagory: z.string().min(1, {
-    message: "Category is required.",
-  }),
-  averageRating: z.coerce.number().min(0).max(5, {
-    message: "Rating must be between 0 and 5.",
-  }),
-});
-
-interface ApartmentFormProps {
-  apartment?: Apartment;
-  onSubmit: (data: any) => void;
-}
-
-export function ApartmentForm({ apartment, onSubmit }: ApartmentFormProps) {
+export function ApartmentForm() {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [noRoom, setNoRoom] = useState("");
   const [noBathRoom, setNoBathRoom] = useState("");
   const [area, setArea] = useState("");
-  const [price, setPrice] = useState("");
-  const [availableFrom, setAvailableFrom] = useState("");
-  const [availableTo, setAvailableTo] = useState("");
+  const [price, setPrice] = useState(0);
+  const [availableFrom, setAvailableFrom] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [availableTo, setAvailableTo] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [imageUrl, setImageUrl] = useState("");
   const [status, setStatus] = useState("");
   const [catagory, setCatagory] = useState("");
   const [averageRating, setAverageRating] = useState("");
+  const [description, setDescription] = useState("");
+  const [selectedFeature, setSelectedFeature] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  function handleAddApartment() {
-    const newApartment = {
-      title,
-      description,
-      location,
-      noRoom,
-      noBathRoom,
-      area,
-      price: parseFloat(price),
-      availableFrom,
-      availableTo,
-      imageUrl,
-      status,
-      catagory,
-      averageRating: parseFloat(averageRating),
-    };
-
-    onSubmit(newApartment);
-  }
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: apartment
-      ? {
-          ...apartment,
-          features: apartment.features || [],
+  async function handleSubmit(): Promise<void> {
+    try {
+      setLoading(true);
+      const respose = await axios.post(
+        "https://house-rental-backend-tc9z.onrender.com/api/apartments",
+        {
+          title,
+          location,
+          noRoom,
+          noBathRoom,
+          area,
+          price,
+          availableFrom,
+          availableTo,
+          imageUrl,
+          status,
+          catagory,
+          averageRating,
+          description,
+          features: JSON.stringify(selectedFeature.join(",")),
         }
-      : {
-          title: "",
-          description: "",
-          location: "",
-          noRoom: "",
-          noBathRoom: "",
-          area: "",
-          features: [],
-          price: 0,
-          availableFrom: "",
-          availableTo: "",
-          imageUrl: "",
-          status: "Available",
-          catagory: "",
-          averageRating: 0,
-        },
-  });
+      );
+      console.log(respose.data);
+      if (respose.status === 201) {
+        toast.success("Apartment created successfully");
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
 
-  function handleSubmit(values: z.infer<typeof formSchema>) {
-    onSubmit(apartment ? { ...values, id: apartment.id } : values);
+      toast.error("Failed to create apartment");
+      console.log(error);
+    }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="Luxury Apartment" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Location</FormLabel>
-                <FormControl>
-                  <Input placeholder="Downtown" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="noRoom"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number of Rooms</FormLabel>
-                <FormControl>
-                  <Input placeholder="3" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="noBathRoom"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number of Bathrooms</FormLabel>
-                <FormControl>
-                  <Input placeholder="2" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="area"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Area</FormLabel>
-                <FormControl>
-                  <Input placeholder="1200 sqft" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Price</FormLabel>
-                <FormControl>
-                  <Input type="number" placeholder="2500" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="availableFrom"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Available From</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="availableTo"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Available To</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="imageUrl"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image URL</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="https://example.com/image.jpg"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="status"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Status</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="bg-white text-secondary">
-                    <SelectItem value="Available">Sell</SelectItem>
-                    <SelectItem value="Rented">Rent</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="catagory"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="bg-white text-secondary">
-                    <SelectItem value="Luxury">Luxury</SelectItem>
-                    <SelectItem value="Studio">Studio</SelectItem>
-                    <SelectItem value="Family">Family</SelectItem>
-                    <SelectItem value="Penthouse">Penthouse</SelectItem>
-                    <SelectItem value="Budget">Budget</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="averageRating"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Average Rating</FormLabel>
-                <FormControl>
-                  <Input type="number" min="0" max="5" step="0.1" {...field} />
-                </FormControl>
-                <FormDescription>Rating from 0 to 5</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label>Title</label>
+          <Input
+            placeholder="Luxury Apartment"
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="A beautiful luxury apartment in the heart of the city"
-                  className="min-h-[120px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="features"
-          render={() => (
-            <FormItem>
-              <div className="mb-4">
-                <FormLabel className="text-base">Features</FormLabel>
-                <FormDescription>
-                  Select the features available in this apartment.
-                </FormDescription>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {features.map((feature) => (
-                  <FormField
-                    key={feature.id}
-                    control={form.control}
-                    name="features"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={feature.id}
-                          className="flex flex-row items-start space-x-3 space-y-0"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(feature.label)}
-                              onCheckedChange={(checked) => {
-                                return checked
-                                  ? field.onChange([
-                                      ...field.value,
-                                      feature.label,
-                                    ])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== feature.label
-                                      )
-                                    );
-                              }}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">
-                            {feature.label}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="flex justify-end gap-4 text-white">
-          <Button type="submit">
-            {apartment ? "Update" : "Create"} Apartment
-          </Button>
+        <div>
+          <label>Location</label>
+          <Input
+            placeholder="Downtown"
+            onChange={(e) => setLocation(e.target.value)}
+          />
         </div>
-      </form>
-    </Form>
+
+        <div>
+          <label>Number of Rooms</label>
+          <Input placeholder="3" onChange={(e) => setNoRoom(e.target.value)} />
+        </div>
+
+        <div>
+          <label>Number of Bathrooms</label>
+          <Input
+            placeholder="2"
+            onChange={(e) => setNoBathRoom(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Area</label>
+          <Input
+            placeholder="1200 sqft"
+            onChange={(e) => setArea(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Price</label>
+          <Input
+            type="number"
+            placeholder="2500"
+            onChange={(e) => setPrice(Number(e.target.value))}
+          />
+        </div>
+
+        <div>
+          <label>Available From</label>
+          <Input
+            className="bg-whie text-secondary"
+            type="date"
+            value={availableFrom}
+            onChange={(e) => {
+              const selectedDate = new Date(e.target.value)
+                .toISOString()
+                .split("T")[0];
+              setAvailableFrom(selectedDate);
+              console.log("Selected Available From date:", selectedDate);
+            }}
+          />
+        </div>
+
+        <div>
+          <label>Available To</label>
+          <Input
+            type="date"
+            value={availableTo}
+            onChange={(e) =>
+              setAvailableTo(
+                new Date(e.target.value).toISOString().split("T")[0]
+              )
+            }
+          />
+        </div>
+
+        <div>
+          <label>Image URL</label>
+          <Input
+            placeholder="https://example.com/image.jpg"
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Status</label>
+          <Select onValueChange={(value) => setStatus(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent className="w-40 bg-white text-secondary">
+              <SelectItem value="sell">Sell</SelectItem>
+              <SelectItem value="rent">Rent</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <label>Category</label>
+          <Select onValueChange={(value) => setCatagory(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent className="w-40 bg-white text-secondary">
+              <SelectItem value="apartment">Apartment</SelectItem>
+              <SelectItem value="penthouse">enthouse</SelectItem>
+              <SelectItem value="villa">Villa</SelectItem>
+              <SelectItem value="Penthouse">Penthouse</SelectItem>
+              <SelectItem value="office">Office</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <label>Average Rating</label>
+          <Input
+            type="number"
+            min="0"
+            max="5"
+            step="0.1"
+            onChange={(e) => setAverageRating(e.target.value)}
+          />
+          <small>Rating from 0 to 5</small>
+        </div>
+      </div>
+
+      <div>
+        <label>Description</label>
+        <textarea
+          placeholder="A beautiful luxury apartment in the heart of the city"
+          className="min-h-[120px] w-full border border-secondary rounded-md p-2"
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label>Features</label>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {features.map((feature) => (
+            <div key={feature.id} className="flex items-center space-x-3 p-2 ">
+              <Checkbox
+                checked={selectedFeature.includes(feature.label)}
+                onCheckedChange={(checked) => {
+                  setSelectedFeature((prev) =>
+                    checked
+                      ? [...prev, feature.label]
+                      : prev.filter((f) => f !== feature.label)
+                  );
+                }}
+                className="h-5 w-5"
+              />
+              <label className="text-sm font-medium">{feature.label}</label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex justify-end gap-4 text-white">
+        <Button onClick={handleSubmit}>
+          {loading ? "Loading..." : "Create Apartment"}
+        </Button>
+      </div>
+    </div>
   );
 }
