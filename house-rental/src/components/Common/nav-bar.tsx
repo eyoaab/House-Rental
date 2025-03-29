@@ -26,6 +26,7 @@ function NavBar({ navItems = [] }) {
     { label: "About", path: "/about" },
     { label: "Services", path: "/services" },
     { label: "Blog", path: "/news" },
+    { label: "Admin", path: "/admin" },
   ];
 
   const items = navItems.length > 0 ? navItems : defaultItems;
@@ -34,22 +35,38 @@ function NavBar({ navItems = [] }) {
     <nav className="w-max flex items-center  justify-between px-2 py-1 text-secondary ">
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center space-x-2 text-secondary">
-        {items.map((item, index) => (
-          <Link key={index} to={item.path}>
-            <div
-              // variant={selectedIndex === index ? "default" : "ghost"}
-              className={cn(
-                " text-md font-medium border-none transition-all duration-300 rounded-md px-3 py-1 cursor-pointer",
-                selectedIndex === index
-                  ? "bg-primary text-white border-none "
-                  : "hover:bg-white/5  text-secondary hover:text-primary"
-              )}
-              onClick={() => dispatch(setSelectedIndex(index))}
-            >
-              {item.label}
-            </div>
-          </Link>
-        ))}
+        {items
+          .filter((item, index) => {
+            const token = localStorage.getItem("token");
+            let isAdmin = false;
+            try {
+              const decodedToken = token
+                ? JSON.parse(atob(token.split(".")[1]))
+                : null;
+              isAdmin = decodedToken.role === "admin";
+            } catch (error) {
+              console.error("Failed to decode token:", error);
+            }
+            if (item.label === "Admin") {
+              return isAdmin;
+            }
+            return index < 5 || isAdmin;
+          })
+          .map((item, index) => (
+            <Link key={index} to={item.path}>
+              <div
+                className={cn(
+                  " text-md font-medium border-none transition-all duration-300 rounded-md px-3 py-1 cursor-pointer",
+                  selectedIndex === index
+                    ? "bg-primary text-white border-none "
+                    : "hover:bg-white/5  text-secondary hover:text-primary"
+                )}
+                onClick={() => dispatch(setSelectedIndex(index))}
+              >
+                {item.label}
+              </div>
+            </Link>
+          ))}
       </div>
 
       {/* Mobile Navigation */}
@@ -78,26 +95,43 @@ function NavBar({ navItems = [] }) {
             className="bg-gray-900/70 backdrop-blur-sm text-white border border-gray-700/50 min-w-[170px] mr-2"
             align="end"
           >
-            {items.map((item, index) => (
-              <DropdownMenuItem
-                key={index}
-                className={cn(
-                  "focus:bg-white/20 focus:text-white",
-                  selectedIndex === index ? "bg-primary text-white" : ""
-                )}
-                onClick={() => {
-                  setSelectedIndex(index);
-                  setIsOpen(false);
-                }}
-              >
-                <Link
-                  to={item.path}
-                  className="w-full py-1 font-medium text-gray-200 hover:text-white"
+            {items
+              .filter((item, index) => {
+                const token = localStorage.getItem("token");
+                let isAdmin = false;
+                try {
+                  const decodedToken = token
+                    ? JSON.parse(atob(token.split(".")[1]))
+                    : null;
+                  isAdmin = decodedToken.role === "admin";
+                } catch (error) {
+                  console.error("Failed to decode token:", error);
+                }
+                if (item.label === "Admin") {
+                  return isAdmin;
+                }
+                return index < 5 || isAdmin;
+              })
+              .map((item, index) => (
+                <DropdownMenuItem
+                  key={index}
+                  className={cn(
+                    "focus:bg-white/20 focus:text-white",
+                    selectedIndex === index ? "bg-primary text-white" : ""
+                  )}
+                  onClick={() => {
+                    setSelectedIndex(index);
+                    setIsOpen(false);
+                  }}
                 >
-                  {item.label}
-                </Link>
-              </DropdownMenuItem>
-            ))}
+                  <Link
+                    to={item.path}
+                    className="w-full py-1 font-medium text-gray-200 hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

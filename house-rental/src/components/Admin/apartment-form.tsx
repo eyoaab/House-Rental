@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import {
   Form,
   FormControl,
@@ -85,6 +86,40 @@ interface ApartmentFormProps {
 }
 
 export function ApartmentForm({ apartment, onSubmit }: ApartmentFormProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [noRoom, setNoRoom] = useState("");
+  const [noBathRoom, setNoBathRoom] = useState("");
+  const [area, setArea] = useState("");
+  const [price, setPrice] = useState("");
+  const [availableFrom, setAvailableFrom] = useState("");
+  const [availableTo, setAvailableTo] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [status, setStatus] = useState("");
+  const [catagory, setCatagory] = useState("");
+  const [averageRating, setAverageRating] = useState("");
+
+  function handleAddApartment() {
+    const newApartment = {
+      title,
+      description,
+      location,
+      noRoom,
+      noBathRoom,
+      area,
+      price: parseFloat(price),
+      availableFrom,
+      availableTo,
+      imageUrl,
+      status,
+      catagory,
+      averageRating: parseFloat(averageRating),
+    };
+
+    onSubmit(newApartment);
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: apartment
