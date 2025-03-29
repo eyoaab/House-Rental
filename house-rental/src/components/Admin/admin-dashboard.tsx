@@ -22,6 +22,7 @@ import { TestimonyForm } from "./testimony-form";
 import type { Apartment } from "@/types/apartment-type";
 import type { News } from "@/types/news-type";
 import type { Testimony } from "@/types/testimony-type";
+import { UpdateApartment } from "./update-apartment";
 import {
   Dialog,
   DialogContent,
@@ -29,6 +30,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import Axios from "axios";
+import { toast } from "react-toastify";
 
 export default function AdminDashboard() {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,6 +53,24 @@ export default function AdminDashboard() {
       dispatch(fetchTestimonies());
     }
   }, [dispatch]);
+  async function deleteApartment(id: number): Promise<void> {
+    try {
+      const response = await Axios.delete(
+        "https://house-rental-backend-tc9z.onrender.com/api/apartments/" + id
+      );
+      console.log(response);
+      if (response.status === 200) {
+        dispatch(fetchApartments()); // Refresh the apartments list after deletion
+        toast.success("Apartment deleted successfully");
+      } else {
+        toast.error("Failed to delete apartment");
+        console.error("Failed to delete apartment");
+      }
+    } catch (error) {
+      toast.error("Error deleting apartment");
+      console.error("Error deleting apartment:", error);
+    }
+  }
   const { apartments, loading } = useSelector(
     (state: RootState) => state.apartments
   );
@@ -97,8 +118,8 @@ export default function AdminDashboard() {
               <ApartmentTable
                 apartments={apartments}
                 onEdit={setEditingApartment}
-                // onDelete={deleteApartment}
-                onDelete={() => {}}
+                onDelete={deleteApartment}
+                // onDelete={() => {}}
               />
             </div>
           </CardContent>
@@ -182,18 +203,22 @@ export default function AdminDashboard() {
       </Dialog>
 
       {/* Edit Apartment Dialog */}
-      <Dialog
-        open={!!editingApartment}
-        onOpenChange={(open) => !open && setEditingApartment(null)}
-      >
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto  bg-white text-secondary">
-          <DialogHeader>
-            <DialogTitle>Edit Apartment</DialogTitle>
-            <DialogDescription>Update the apartment details.</DialogDescription>
-          </DialogHeader>
-          {editingApartment && <ApartmentForm />}
-        </DialogContent>
-      </Dialog>
+      {editingApartment && (
+        <Dialog
+          open={!!editingApartment}
+          onOpenChange={(open) => !open && setEditingApartment(null)}
+        >
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto  bg-white text-secondary">
+            <DialogHeader>
+              <DialogTitle>Edit Apartment</DialogTitle>
+              <DialogDescription>
+                Update the apartment details.
+              </DialogDescription>
+            </DialogHeader>
+            <UpdateApartment apartment={editingApartment} />
+          </DialogContent>
+        </Dialog>
+      )}
 
       {/* Add News Dialog */}
       <Dialog open={isAddNewsOpen} onOpenChange={setIsAddNewsOpen}>
