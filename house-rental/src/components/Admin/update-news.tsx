@@ -5,12 +5,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
+import type { News } from "@/types/news-type";
 
-export function NewsForm() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [date, setDate] = useState("");
+interface UpdateNewsProps {
+  news: News;
+}
+export function UpdateNews({ news }: UpdateNewsProps) {
+  const [title, setTitle] = useState(news.title);
+  const [description, setDescription] = useState(news.description);
+  const [imageUrl, setImageUrl] = useState<string>(
+    news.imageUrl?.toString() || ""
+  );
+  const [date, setDate] = useState(news.date);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent) {
@@ -18,8 +24,8 @@ export function NewsForm() {
     setLoading(true);
 
     try {
-      const response = await Axios.post(
-        "https://house-rental-backend-tc9z.onrender.com/api/blogs",
+      const response = await Axios.put(
+        "https://house-rental-backend-tc9z.onrender.com/api/blogs/" + news.id,
         {
           title,
           description,
@@ -29,8 +35,8 @@ export function NewsForm() {
         }
       );
 
-      if (response.status === 201) {
-        toast.success("News created successfully");
+      if (response.status === 201 || response.status === 200) {
+        toast.success("News Updated successfully");
         // Optionally reset the form fields
         setTitle("");
         setDescription("");
@@ -72,8 +78,20 @@ export function NewsForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Image URL</label>
-        <Input placeholder="https://example.com/image.jpg" className="input" />
+        <label className="block text-sm font-medium" htmlFor="imageUrl">
+          Image URL
+        </label>
+        <Input
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://example.com/image.jpg"
+          className="input"
+          type="url"
+          aria-describedby="imageUrlHelp"
+        />
+        <p id="imageUrlHelp" className="text-xs text-gray-500">
+          Enter a valid URL for the image (e.g., https://example.com/image.jpg).
+        </p>
       </div>
 
       <div>
@@ -87,7 +105,7 @@ export function NewsForm() {
       </div>
 
       <div className="flex justify-end gap-4 text-white">
-        <Button type="submit">{loading ? "Loading..." : "Create News"}</Button>
+        <Button type="submit">{loading ? "Loading..." : "Update News"}</Button>
       </div>
     </form>
   );

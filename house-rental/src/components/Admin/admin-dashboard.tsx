@@ -4,6 +4,7 @@ import { fetchNews } from "@/state-managment/slices/news-slice";
 import { fetchTestimonies } from "@/state-managment/slices/testimony-slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../state-managment/store";
+import { UpdateNews } from "./update-news";
 import {
   Card,
   CardContent,
@@ -69,6 +70,25 @@ export default function AdminDashboard() {
     } catch (error) {
       toast.error("Error deleting apartment");
       console.error("Error deleting apartment:", error);
+    }
+  }
+  async function deleteNews(id: number): Promise<void> {
+    try {
+      console.log("Deleting news with id:", id);
+      const response = await Axios.delete(
+        "https://house-rental-backend-tc9z.onrender.com/api/blogs/" + id
+      );
+      console.log(response);
+      if (response.status === 200) {
+        dispatch(fetchNews()); // Refresh the apartments list after deletion
+        toast.success("News deleted successfully");
+      } else {
+        toast.error("Failed to delete News");
+        console.error("Failed to delete News");
+      }
+    } catch (error) {
+      toast.error("Error deleting News");
+      console.error("Error deleting News:", error);
     }
   }
   const { apartments, loading } = useSelector(
@@ -148,9 +168,8 @@ export default function AdminDashboard() {
             <div className="overflow-x-auto">
               <NewsTable
                 news={newses}
-                onEdit={() => {}}
-                onDelete={() => {}}
-                // onDelete={deleteNews}
+                onEdit={setEditingNews}
+                onDelete={(id) => deleteNews(Number(id))}
               />
             </div>
           </CardContent>
@@ -228,34 +247,31 @@ export default function AdminDashboard() {
             <DialogDescription>Create a new news article.</DialogDescription>
           </DialogHeader>
           <NewsForm
-            // onSubmit={addNews}
-            onSubmit={() => {}}
+          // onSubmit={addNews}
+          // onSubmit={() => {}}
           />
         </DialogContent>
       </Dialog>
 
       {/* Edit News Dialog */}
-      <Dialog
-        open={!!editingNews}
-        onOpenChange={(open) => !open && setEditingNews(null)}
-      >
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto  bg-white text-secondary">
-          <DialogHeader>
-            <DialogTitle>Edit News Article</DialogTitle>
-            <DialogDescription>
-              Update the news article details.
-            </DialogDescription>
-          </DialogHeader>
-          {editingNews && (
-            <NewsForm
-              news={editingNews}
-              onSubmit={() => {}}
-
-              // onSubmit={updateNews}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      {editingNews && (
+        <Dialog
+          open={!!editingNews}
+          onOpenChange={(open) => {
+            if (!open) setEditingNews(null);
+          }}
+        >
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white text-secondary">
+            <DialogHeader>
+              <DialogTitle>Edit News Article</DialogTitle>
+              <DialogDescription>
+                Update the news article details.
+              </DialogDescription>
+            </DialogHeader>
+            <UpdateNews news={editingNews} />
+          </DialogContent>
+        </Dialog>
+      )}
 
       {/* Add Testimony Dialog */}
       <Dialog open={isAddTestimonyOpen} onOpenChange={setIsAddTestimonyOpen}>
