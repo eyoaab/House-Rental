@@ -5,6 +5,7 @@ import { fetchTestimonies } from "@/state-managment/slices/testimony-slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../state-managment/store";
 import { UpdateNews } from "./update-news";
+import { UpdateTestimony } from "./update-testimony";
 import {
   Card,
   CardContent,
@@ -89,6 +90,25 @@ export default function AdminDashboard() {
     } catch (error) {
       toast.error("Error deleting News");
       console.error("Error deleting News:", error);
+    }
+  }
+
+  async function deleteTestimony(id: number): Promise<void> {
+    try {
+      const response = await Axios.delete(
+        "https://house-rental-backend-tc9z.onrender.com/api/testimony/" + id
+      );
+      console.log(response);
+      if (response.status === 200) {
+        dispatch(fetchTestimonies()); // Refresh the apartments list after deletion
+        toast.success("Testimony deleted successfully");
+      } else {
+        toast.error("Failed to delete Testimony");
+        console.error("Failed to delete Testimony");
+      }
+    } catch (error) {
+      toast.error("Error deleting Testimony");
+      console.error("Error deleting Testimony:", error);
     }
   }
   const { apartments, loading } = useSelector(
@@ -199,8 +219,8 @@ export default function AdminDashboard() {
               <TestimonyTable
                 testimonies={testimonies}
                 onEdit={setEditingTestimony}
-                onDelete={() => {}}
-                // onDelete={deleteTestimony}
+                // onDelete={() => {}}
+                onDelete={deleteTestimony}
               />
             </div>
           </CardContent>
@@ -280,7 +300,8 @@ export default function AdminDashboard() {
             <DialogTitle>Add Testimony</DialogTitle>
             <DialogDescription>Add a new customer testimony.</DialogDescription>
           </DialogHeader>
-          <TestimonyForm onSubmit={() => {}} />
+          <TestimonyForm />
+          {/* add tesimony form */}
         </DialogContent>
       </Dialog>
 
@@ -294,13 +315,7 @@ export default function AdminDashboard() {
             <DialogTitle>Edit Testimony</DialogTitle>
             <DialogDescription>Update the testimony details.</DialogDescription>
           </DialogHeader>
-          {editingTestimony && (
-            <TestimonyForm
-              testimony={editingTestimony}
-              onSubmit={() => {}}
-              // onSubmit={updateTestimony}
-            />
-          )}
+          {editingTestimony && <UpdateTestimony testimony={editingTestimony} />}
         </DialogContent>
       </Dialog>
     </div>

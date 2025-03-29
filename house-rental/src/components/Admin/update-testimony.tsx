@@ -8,14 +8,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Testimony } from "@/types/testimony-type";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
-export function TestimonyForm() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [rate, setRate] = useState(0);
-  const [imageUrl, setImageUrl] = useState("");
+
+interface UpdateTestimonyProps {
+  testimony: Testimony;
+}
+
+export function UpdateTestimony({ testimony }: UpdateTestimonyProps) {
+  const [name, setName] = useState(testimony.name || "");
+  const [description, setDescription] = useState(testimony.description || "");
+  const [rate, setRate] = useState(testimony.rate || 0);
+  const [imageUrl, setImageUrl] = useState(testimony.imageUrl || "");
   const [loading, setLoading] = useState(false);
   async function handleSubmit() {
     console.log("is about to submit");
@@ -26,8 +32,9 @@ export function TestimonyForm() {
 
     try {
       setLoading(true);
-      const response = await Axios.post(
-        "https://house-rental-backend-tc9z.onrender.com/api/testimony",
+      const response = await Axios.put(
+        "https://house-rental-backend-tc9z.onrender.com/api/testimony/" +
+          testimony.id,
         {
           name,
           description,
@@ -36,8 +43,8 @@ export function TestimonyForm() {
         }
       );
       setLoading(false);
-      if (response.status === 201) {
-        toast.success("Testimony created successfully");
+      if (response.status === 200) {
+        toast.success("Testimony Updated successfully");
         setName("");
         setDescription("");
         setRate(0);
@@ -107,7 +114,7 @@ export function TestimonyForm() {
 
       <div className="flex justify-end gap-4 text-white">
         <Button onClick={handleSubmit}>
-          {loading ? "Loading..." : "Create Testimony"}
+          {loading ? "Loading..." : "Update Testimony"}
         </Button>
       </div>
     </div>
