@@ -21,7 +21,7 @@ export const registerUser = createAsyncThunk<
         username,
         password,
         fullName,
-        role: "admin",
+        role: "user",
       });
 
       // If status is not 201, extract message from the response
