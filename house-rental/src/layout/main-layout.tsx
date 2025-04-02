@@ -24,6 +24,7 @@ const App: React.FC = () => {
   return (
     <div className="scrollbar-hidden flex flex-col max-w-[1440px] mx-auto bg-white">
       <HeroPage />
+
       <PropertySearch
         isFromHomePage={true}
         selectedLocation={selectedLocation}
