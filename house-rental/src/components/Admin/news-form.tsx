@@ -51,7 +51,7 @@ export function NewsForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
+      <div className="text-secondary">
         <label className="block text-sm font-medium">Title</label>
         <Input
           value={title}
@@ -62,27 +62,34 @@ export function NewsForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Description</label>
+        <label className="block text-sm font-medium text-secondary">
+          Description
+        </label>
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="We're excited to announce our new property development..."
-          className="textarea min-h-[120px]"
+          className="textarea min-h-[120px] text-secondary"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Image URL</label>
-        <Input placeholder="https://example.com/image.jpg" className="input" />
+        <label className="block text-sm font-medium text-secondary">
+          Image URL
+        </label>
+        <Input
+          placeholder="https://example.com/image.jpg"
+          className="text-secondary input"
+        />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Date</label>
+        <label className="text-secondary block text-sm font-medium">Date</label>
         <Input
           value={date}
           onChange={(e) => setDate(e.target.value)}
           type="date"
-          className="input"
+          className="input text-secondary"
         />
       </div>
 

@@ -55,8 +55,9 @@ export function TestimonyForm() {
   return (
     <div className="space-y-6">
       <div>
-        <label className="block text-sm font-medium">Name</label>
+        <label className="block text-sm font-medium text-secondary">Name</label>
         <Input
+          className="text-secondary"
           name="name"
           placeholder="John Doe"
           value={name}
@@ -65,24 +66,31 @@ export function TestimonyForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Description</label>
+        <label className="block text-sm font-medium text-secondary">
+          Description
+        </label>
         <Textarea
           name="description"
           placeholder="I had an amazing experience with this apartment..."
-          className="min-h-[120px]"
+          className="min-h-[120px] text-secondary"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Rating</label>
+        <label className="block text-sm font-medium text-secondary">
+          Rating
+        </label>
         <Select
           onValueChange={(value) => setRate(parseInt(value))}
           value={rate.toString()}
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Select rating" />
+          <SelectTrigger className="text-secondary">
+            <SelectValue
+              placeholder="Select rating"
+              className="text-secondary"
+            />
           </SelectTrigger>
           <SelectContent className="bg-white text-secondary">
             <SelectItem value="1">1 Star</SelectItem>
@@ -92,16 +100,19 @@ export function TestimonyForm() {
             <SelectItem value="5">5 Stars</SelectItem>
           </SelectContent>
         </Select>
-        <p className="text-sm text-gray-500">Rate from 1 to 5 stars</p>
+        <p className="text-sm text-secondary">Rate from 1 to 5 stars</p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Image URL</label>
+        <label className="block text-sm font-medium text-secondary">
+          Image URL
+        </label>
         <Input
           name="imageUrl"
           placeholder="https://example.com/image.jpg"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
+          className="text-secondary"
         />
       </div>
 

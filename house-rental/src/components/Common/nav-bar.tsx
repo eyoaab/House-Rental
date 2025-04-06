@@ -26,7 +26,6 @@ function NavBar({ navItems = [] }) {
     { label: "About", path: "/about" },
     { label: "Services", path: "/services" },
     { label: "Blog", path: "/news" },
-    { label: "Admin", path: "/admin" },
   ];
 
   const items = navItems.length > 0 ? navItems : defaultItems;

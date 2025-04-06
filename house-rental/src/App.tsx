@@ -12,7 +12,16 @@ import NewssList from "./pages/News/all-news";
 import BasicLayout from "./layout/basic-layout";
 import AboutPage from "./pages/About/about-page";
 import ServicesList from "./pages/services/services-page";
-import AdminDashboard from "./components/Admin/admin-dashboard";
+import AdminLayout from "./layout/admin-layout";
+import DashboardPage from "./pages/Admin/dashboard-page";
+import PropertiesPage from "./pages/Admin/properties-page";
+import BlogsPage from "./pages/Admin/blogs-page";
+import TestimoniesPage from "./pages/Admin/testimonies-page";
+import AdminPage from "./pages/Admin/admin-page";
+import AddPropertyPage from "./pages/Admin/add-property-page";
+import AddBlogPage from "./pages/Admin/add-blog-page";
+import AddTestimonyPage from "./pages/Admin/add-testimony-page";
+
 const App: React.FC = () => {
   return (
     <>
@@ -24,11 +33,23 @@ const App: React.FC = () => {
           <Route path="/" element={<BasicLayout />}>
             <Route index element={<MainLayout />} />
             <Route path="/apartments" element={<ApartmentsList />} />
-            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/news" element={<NewssList />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesList />} />
+            <Route path="/admin-old" element={<AdminPage />} />
           </Route>
+
+          {/* Admin Routes with Sidebar */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="properties" element={<PropertiesPage />} />
+            <Route path="properties/new" element={<AddPropertyPage />} />
+            <Route path="blogs" element={<BlogsPage />} />
+            <Route path="blogs/new" element={<AddBlogPage />} />
+            <Route path="testimonies" element={<TestimoniesPage />} />
+            <Route path="testimonies/new" element={<AddTestimonyPage />} />
+          </Route>
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
