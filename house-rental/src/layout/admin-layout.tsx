@@ -1,13 +1,63 @@
 import React from "react";
 import { AdminSidebar } from "@/components/Admin/admin-sidebar";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/state-managment/store";
+import { logout } from "@/state-managment/slices/user-slice";
+import { Button } from "@/components/ui/button";
 
 const AdminLayout: React.FC = () => {
+  const { user } = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem("token");
+  const userName = token
+    ? JSON.parse(atob(token.split(".")[1])).username
+    : null;
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
     <div className="flex flex-col lg:flex-row w-screen h-screen overflow-hidden bg-gray-50">
       <AdminSidebar />
-      <main className="w-full overflow-y-auto p-4 md:p-6 pt-20 lg:pt-6">
-        <Outlet />
+      <main className="w-full overflow-y-auto">
+        <header
+          className="w-full sticky top-0 bg-white shadow-md z-10 flex items-center justify-end pr-3"
+          style={{ minHeight: "4rem", height: "10vh" }}
+        >
+          <div className="flex items-center space-x-3 ">
+            {user?.username || userName ? (
+              <>
+                <div className="hidden md:block text-black border-white/20">
+                  {user?.username || userName}
+                </div>
+                <div
+                  onClick={handleLogout}
+                  className="py-1 px-2 cursor-pointer rounded-md bg-primary hover:text-white border border-gray"
+                >
+                  Logout
+                </div>
+              </>
+            ) : (
+              <Link to="/login">
+                <Button
+                  variant="outline"
+                  className="bg-gray-500 text-white border-white/20 hover:bg-primary"
+                >
+                  Login
+                </Button>
+              </Link>
+            )}
+          </div>
+        </header>
+        <div className="px-4">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

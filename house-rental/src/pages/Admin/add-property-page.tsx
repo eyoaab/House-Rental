@@ -19,7 +19,7 @@ export default function AddPropertyPage() {
   }, [dispatch]);
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto py-6 text-secondary">
       <Card className="shadow-lg transition-shadow duration-300 border border-gray-200">
         <CardHeader className="p-6 bg-gradient-to-r from-gray-50 to-white">
           <CardTitle className="text-2xl font-bold text-gray-900">
