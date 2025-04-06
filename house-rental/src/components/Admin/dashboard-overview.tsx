@@ -14,12 +14,10 @@ import {
 import {
   BarChart,
   Clock,
-  Home,
   MessageSquareQuote,
   Newspaper,
   TrendingUp,
   Building,
-  Users,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
