@@ -30,13 +30,13 @@ const ApartmentsList = () => {
   const [selectedLocation, setSelectedLocation] = useState(
     searchParams.get("location") || ""
   );
-  const [isFor, setIsFor] = useState(searchParams.get("isFor") || ""); // to truck whther it is for rent or sell
+  const [isFor, setIsFor] = useState(searchParams.get("isFor") || "");
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedApartment, setSelectedApartment] = useState<Apartment | null>(
     null
   );
-  // function to handlethe changes in teh state
+
   const handleTypeSelect = (type: string) => {
     setSelectedType(type);
   };

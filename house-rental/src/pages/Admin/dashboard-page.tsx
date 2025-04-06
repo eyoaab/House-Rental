@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { DashboardOverview } from "@/components/Admin/dashboard-overview";
 import { useDispatch } from "react-redux";
 import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
@@ -8,7 +8,7 @@ export default function DashboardPage() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(setSelectedIndex(5)); // Update to the correct index for admin
+    dispatch(setSelectedIndex(5));
   }, [dispatch]);
 
   return (

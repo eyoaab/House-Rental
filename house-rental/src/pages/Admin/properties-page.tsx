@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { fetchApartments } from "@/state-managment/slices/apartments-slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/state-managment/store";
 import { ApartmentTable } from "@/components/Admin/apartment-table";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { ApartmentForm } from "@/components/Admin/apartment-form";
 import { UpdateApartment } from "@/components/Admin/update-apartment";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
 import type { Apartment } from "@/types/apartment-type";
 import {
   Dialog,
@@ -36,9 +33,11 @@ export default function PropertiesPage() {
   const [editingApartment, setEditingApartment] = useState<Apartment | null>(
     null
   );
+  const hideApartmentPopup = () => {
+    setEditingApartment(null);
+  };
 
   useEffect(() => {
-    dispatch(setSelectedIndex(5)); // Update to the correct index for admin
     if (apartments.length === 0 && !loading) {
       dispatch(fetchApartments());
     }
@@ -74,13 +73,6 @@ export default function PropertiesPage() {
               Manage your property listings
             </CardDescription>
           </div>
-          <Button
-            onClick={() => setIsAddApartmentOpen(true)}
-            className="bg-primary text-white transition-colors duration-200 w-full sm:w-auto"
-          >
-            <PlusCircle className="mr-2 h-5 w-5" />
-            Add Property
-          </Button>
         </CardHeader>
         <CardContent className="p-6">
           <div className="overflow-x-auto">
@@ -119,7 +111,10 @@ export default function PropertiesPage() {
                 Update the property details.
               </DialogDescription>
             </DialogHeader>
-            <UpdateApartment apartment={editingApartment} />
+            <UpdateApartment
+              apartment={editingApartment}
+              closeEditingPopUp={hideApartmentPopup}
+            />
           </DialogContent>
         </Dialog>
       )}

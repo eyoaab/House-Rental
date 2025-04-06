@@ -1,47 +1,58 @@
 import { Button } from "@/components/ui/button";
-
+import { fetchNews } from "@/state-managment/slices/news-slice";
+import { useDispatch } from "react-redux";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
 import type { News } from "@/types/news-type";
+import { AppDispatch } from "@/state-managment/store";
 
 interface UpdateNewsProps {
   news: News;
+  closeNewsPopup: () => void;
 }
-export function UpdateNews({ news }: UpdateNewsProps) {
+export function UpdateNews({ news, closeNewsPopup }: UpdateNewsProps) {
   const [title, setTitle] = useState(news.title);
   const [description, setDescription] = useState(news.description);
-  const [imageUrl, setImageUrl] = useState<string>(
-    news.imageUrl?.toString() || ""
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [date, setDate] = useState(
+    news.date
+      ? new Date(news.date).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0]
   );
-  const [date, setDate] = useState(news.date);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
     setLoading(true);
 
     try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("date", date);
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+      formData.append("category", "");
+
       const response = await Axios.put(
         "https://house-rental-backend-tc9z.onrender.com/api/blogs/" + news.id,
+        formData,
         {
-          title,
-          description,
-          imageUrl,
-          date,
-          category: "",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
       if (response.status === 201 || response.status === 200) {
+        dispatch(fetchNews());
         toast.success("News Updated successfully");
-        // Optionally reset the form fields
-        setTitle("");
-        setDescription("");
-        setImageUrl("");
-        setDate("");
+        closeNewsPopup();
       } else {
         toast.error("Unexpected response from the server");
       }
@@ -78,19 +89,17 @@ export function UpdateNews({ news }: UpdateNewsProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium" htmlFor="imageUrl">
-          Image URL
+        <label className="block text-sm font-medium" htmlFor="imageFile">
+          Image
         </label>
         <Input
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="https://example.com/image.jpg"
+          onChange={(e) => setImageFile(e.target.files?.[0] || null)}
           className="input"
-          type="url"
-          aria-describedby="imageUrlHelp"
+          type="file"
+          aria-describedby="imageFileHelp"
         />
-        <p id="imageUrlHelp" className="text-xs text-gray-500">
-          Enter a valid URL for the image (e.g., https://example.com/image.jpg).
+        <p id="imageFileHelp" className="text-xs text-gray-500">
+          Select an image file to upload.
         </p>
       </div>
 

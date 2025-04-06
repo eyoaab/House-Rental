@@ -16,8 +16,6 @@ import {
 import { ApartmentTable } from "./apartment-table";
 import { NewsTable } from "./news-table";
 import { TestimonyTable } from "./testimony-table";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import { ApartmentForm } from "./apartment-form";
 import { NewsForm } from "./news-form";
 import { TestimonyForm } from "./testimony-form";
@@ -128,6 +126,15 @@ export default function AdminDashboard() {
   const [editingTestimony, setEditingTestimony] = useState<Testimony | null>(
     null
   );
+  const handleCloseAparmentPopup = () => {
+    setEditingApartment(null);
+  };
+  const handleCloseNewsPopup = () => {
+    setEditingNews(null);
+  };
+  const handleCloseTestimonyPopup = () => {
+    setEditingTestimony(null);
+  };
 
   return (
     <div className="container mx-auto py-30 text-secondary">
@@ -145,13 +152,6 @@ export default function AdminDashboard() {
                 Manage your apartment listings
               </CardDescription>
             </div>
-            <Button
-              onClick={() => setIsAddApartmentOpen(true)}
-              className="bg-primary  text-white  transition-colors duration-200 w-full sm:w-auto"
-            >
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Add Apartment
-            </Button>
           </CardHeader>
           <CardContent className="p-6">
             <div className="overflow-x-auto">
@@ -176,13 +176,6 @@ export default function AdminDashboard() {
                 Manage your news articles
               </CardDescription>
             </div>
-            <Button
-              onClick={() => setIsAddNewsOpen(true)}
-              className="bg-primary  text-white  transition-colors duration-200 w-full sm:w-auto"
-            >
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Add News
-            </Button>
           </CardHeader>
           <CardContent className="p-6">
             <div className="overflow-x-auto">
@@ -206,13 +199,6 @@ export default function AdminDashboard() {
                 Manage customer testimonials
               </CardDescription>
             </div>
-            <Button
-              onClick={() => setIsAddTestimonyOpen(true)}
-              className="bg-primary text-white transition-colors duration-200 w-full sm:w-auto"
-            >
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Add Testimony
-            </Button>
           </CardHeader>
           <CardContent className="p-6">
             <div className="overflow-x-auto">
@@ -254,7 +240,10 @@ export default function AdminDashboard() {
                 Update the apartment details.
               </DialogDescription>
             </DialogHeader>
-            <UpdateApartment apartment={editingApartment} />
+            <UpdateApartment
+              apartment={editingApartment}
+              closeEditingPopUp={handleCloseAparmentPopup}
+            />
           </DialogContent>
         </Dialog>
       )}
@@ -288,7 +277,10 @@ export default function AdminDashboard() {
                 Update the news article details.
               </DialogDescription>
             </DialogHeader>
-            <UpdateNews news={editingNews} />
+            <UpdateNews
+              news={editingNews}
+              closeNewsPopup={handleCloseNewsPopup}
+            />
           </DialogContent>
         </Dialog>
       )}
@@ -315,7 +307,12 @@ export default function AdminDashboard() {
             <DialogTitle>Edit Testimony</DialogTitle>
             <DialogDescription>Update the testimony details.</DialogDescription>
           </DialogHeader>
-          {editingTestimony && <UpdateTestimony testimony={editingTestimony} />}
+          {editingTestimony && (
+            <UpdateTestimony
+              testimony={editingTestimony}
+              closeTestimonyPopup={handleCloseTestimonyPopup}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>

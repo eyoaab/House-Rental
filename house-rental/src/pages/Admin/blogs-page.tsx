@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { fetchNews } from "@/state-managment/slices/news-slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/state-managment/store";
 import { NewsTable } from "@/components/Admin/news-table";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { NewsForm } from "@/components/Admin/news-form";
 import { UpdateNews } from "@/components/Admin/update-news";
@@ -32,6 +30,9 @@ export default function BlogsPage() {
   const { newses, loading } = useSelector((state: RootState) => state.news);
   const [isAddNewsOpen, setIsAddNewsOpen] = useState(false);
   const [editingNews, setEditingNews] = useState<News | null>(null);
+  const hideNewsPopup = () => {
+    setEditingNews(null);
+  };
 
   useEffect(() => {
     dispatch(setSelectedIndex(5)); // Update to the correct index for admin
@@ -70,13 +71,6 @@ export default function BlogsPage() {
               Manage your blog posts
             </CardDescription>
           </div>
-          <Button
-            onClick={() => setIsAddNewsOpen(true)}
-            className="bg-primary text-white transition-colors duration-200 w-full sm:w-auto"
-          >
-            <PlusCircle className="mr-2 h-5 w-5" />
-            Add Blog
-          </Button>
         </CardHeader>
         <CardContent className="p-6">
           <div className="overflow-x-auto">
@@ -115,7 +109,7 @@ export default function BlogsPage() {
                 Update the blog post details.
               </DialogDescription>
             </DialogHeader>
-            <UpdateNews news={editingNews} />
+            <UpdateNews news={editingNews} closeNewsPopup={hideNewsPopup} />
           </DialogContent>
         </Dialog>
       )}

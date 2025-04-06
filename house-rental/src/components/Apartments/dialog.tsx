@@ -55,7 +55,11 @@ export const ApartmentDetailsDialog = ({
         <div className="scrollbar-hidden space-y-4">
           <div className="relative rounded-lg overflow-hidden w-full flex justify-center">
             <img
-              src={`${apartment.imageUrl}`}
+              src={
+                apartment.imageUrl && apartment.imageUrl.trim() !== ""
+                  ? apartment.imageUrl
+                  : "./placeholder.png"
+              }
               alt={apartment.title}
               className="h-[180px] sm:h-[280px] object-cover"
               style={{ width: IMAGE_WIDTH }}

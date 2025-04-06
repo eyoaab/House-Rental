@@ -12,45 +12,57 @@ import { Testimony } from "@/types/testimony-type";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
+import { fetchTestimonies } from "@/state-managment/slices/testimony-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/state-managment/store";
 
 interface UpdateTestimonyProps {
   testimony: Testimony;
+  closeTestimonyPopup: () => void;
 }
 
-export function UpdateTestimony({ testimony }: UpdateTestimonyProps) {
+export function UpdateTestimony({
+  testimony,
+  closeTestimonyPopup,
+}: UpdateTestimonyProps) {
   const [name, setName] = useState(testimony.name || "");
   const [description, setDescription] = useState(testimony.description || "");
   const [rate, setRate] = useState(testimony.rate || 0);
-  const [imageUrl, setImageUrl] = useState(testimony.imageUrl || "");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+
   async function handleSubmit() {
-    console.log("is about to submit");
-    if (!name || !description || !rate || !imageUrl) {
+    if (!name || !description || !rate || !imageFile) {
       toast.error("Please fill in all fields");
       return;
     }
 
     try {
       setLoading(true);
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("rate", rate.toString());
+      formData.append("image", imageFile);
+
       const response = await Axios.put(
         "https://house-rental-backend-tc9z.onrender.com/api/testimony/" +
           testimony.id,
+        formData,
         {
-          name,
-          description,
-          rate,
-          imageUrl,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
+
       setLoading(false);
       if (response.status === 200) {
+        dispatch(fetchTestimonies());
         toast.success("Testimony Updated successfully");
-        setName("");
-        setDescription("");
-        setRate(0);
-        setImageUrl("");
+        closeTestimonyPopup();
       }
-      console.log(response);
     } catch (error: any) {
       setLoading(false);
       const errorMessage =
@@ -103,12 +115,15 @@ export function UpdateTestimony({ testimony }: UpdateTestimonyProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Image URL</label>
+        <label className="block text-sm font-medium">Image File</label>
         <Input
-          name="imageUrl"
-          placeholder="https://example.com/image.jpg"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          type="file"
+          name="imageFile"
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              setImageFile(e.target.files[0]);
+            }
+          }}
         />
       </div>
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedIndex } from "@/state-managment/slices/navigation-slice";
 import { AppDispatch } from "@/state-managment/store";
@@ -15,7 +15,7 @@ export default function AddPropertyPage() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(setSelectedIndex(5)); // Update to the correct index for admin
+    dispatch(setSelectedIndex(5));
   }, [dispatch]);
 
   return (

@@ -36,16 +36,8 @@ function NavBar({ navItems = [] }) {
       <div className="hidden md:flex items-center space-x-2 text-secondary">
         {items
           .filter((item, index) => {
-            const token = localStorage.getItem("token");
             let isAdmin = false;
-            try {
-              const decodedToken = token
-                ? JSON.parse(atob(token.split(".")[1]))
-                : null;
-              isAdmin = decodedToken.role === "admin";
-            } catch (error) {
-              console.error("Failed to decode token:", error);
-            }
+
             if (item.label === "Admin") {
               return isAdmin;
             }

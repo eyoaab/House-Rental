@@ -11,28 +11,36 @@ import {
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
+
 export function TestimonyForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [rate, setRate] = useState(0);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+
   async function handleSubmit() {
     console.log("is about to submit");
-    if (!name || !description || !rate || !imageUrl) {
+    if (!name || !description || !rate || !imageFile) {
       toast.error("Please fill in all fields");
       return;
     }
 
     try {
       setLoading(true);
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("rate", rate.toString());
+      formData.append("image", imageFile);
+
       const response = await Axios.post(
         "https://house-rental-backend-tc9z.onrender.com/api/testimony",
+        formData,
         {
-          name,
-          description,
-          rate,
-          imageUrl,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       setLoading(false);
@@ -41,7 +49,7 @@ export function TestimonyForm() {
         setName("");
         setDescription("");
         setRate(0);
-        setImageUrl("");
+        setImageFile(null);
       }
       console.log(response);
     } catch (error: any) {
@@ -105,13 +113,12 @@ export function TestimonyForm() {
 
       <div>
         <label className="block text-sm font-medium text-secondary">
-          Image URL
+          Image File
         </label>
         <Input
-          name="imageUrl"
-          placeholder="https://example.com/image.jpg"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          type="file"
+          name="imageFile"
+          onChange={(e) => setImageFile(e.target.files?.[0] || null)}
           className="text-secondary"
         />
       </div>

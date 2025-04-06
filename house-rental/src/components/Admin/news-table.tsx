@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { cn } from "@/lib/utils"; // Assuming you have a utility for classNames
+import { cn } from "@/lib/utils";
 
 interface NewsTableProps {
   news: News[];

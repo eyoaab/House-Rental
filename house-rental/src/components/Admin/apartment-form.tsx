@@ -36,7 +36,7 @@ export function ApartmentForm() {
   const [availableTo, setAvailableTo] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [status, setStatus] = useState("");
   const [catagory, setCatagory] = useState("");
   const [averageRating, setAverageRating] = useState("");
@@ -47,33 +47,56 @@ export function ApartmentForm() {
   async function handleSubmit(): Promise<void> {
     try {
       setLoading(true);
-      const respose = await axios.post(
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("location", location);
+      formData.append("noRoom", noRoom);
+      formData.append("noBathRoom", noBathRoom);
+      formData.append("area", area);
+      formData.append("price", price.toString());
+      formData.append("availableFrom", availableFrom);
+      formData.append("availableTo", availableTo);
+      formData.append("status", status);
+      formData.append("catagory", catagory);
+      formData.append("averageRating", averageRating.toString());
+      formData.append("description", description);
+      formData.append("features", JSON.stringify(selectedFeature));
+
+      if (imageFile) {
+        formData.append("image", imageFile); // Append the selected image file
+      }
+
+      const response = await axios.post(
         "https://house-rental-backend-tc9z.onrender.com/api/apartments",
+        formData,
         {
-          title,
-          location,
-          noRoom,
-          noBathRoom,
-          area,
-          price,
-          availableFrom,
-          availableTo,
-          imageUrl,
-          status,
-          catagory,
-          averageRating,
-          description,
-          features: JSON.stringify(selectedFeature.join(",")),
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-      console.log(respose.data);
-      if (respose.status === 201) {
+
+      console.log(response.data);
+      if (response.status === 201) {
+        setTitle("");
+        setLocation("");
+        setNoRoom("");
+        setNoBathRoom("");
+        setArea("");
+        setPrice(0);
+        setAvailableFrom(new Date().toISOString().split("T")[0]);
+        setAvailableTo(new Date().toISOString().split("T")[0]);
+        setStatus("");
+        setCatagory("");
+        setAverageRating("");
+        setDescription("");
+        setSelectedFeature([]);
+        setImageFile(null);
         toast.success("Apartment created successfully");
       }
       setLoading(false);
     } catch (error) {
       setLoading(false);
-
       toast.error("Failed to create apartment");
       console.log(error);
     }
@@ -158,10 +181,16 @@ export function ApartmentForm() {
         </div>
 
         <div>
-          <label>Image URL</label>
+          <label>Image</label>
           <Input
-            placeholder="https://example.com/image.jpg"
-            onChange={(e) => setImageUrl(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setImageFile(file);
+              }
+            }}
           />
         </div>
 
@@ -186,9 +215,8 @@ export function ApartmentForm() {
             </SelectTrigger>
             <SelectContent className="w-40 bg-white text-secondary">
               <SelectItem value="apartment">Apartment</SelectItem>
-              <SelectItem value="penthouse">enthouse</SelectItem>
+              <SelectItem value="penthouse">Penthouse</SelectItem>
               <SelectItem value="villa">Villa</SelectItem>
-              <SelectItem value="Penthouse">Penthouse</SelectItem>
               <SelectItem value="office">Office</SelectItem>
             </SelectContent>
           </Select>

@@ -17,7 +17,78 @@ import {
   Home,
   MessageSquareQuote,
   Newspaper,
+  TrendingUp,
+  Building,
+  Users,
 } from "lucide-react";
+import { motion } from "framer-motion";
+
+const StatCard = ({ icon: Icon, title, description, value, subValue }: any) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3 }}
+  >
+    <Card className="overflow-hidden bg-white/50 backdrop-blur-sm border-none ring-1 ring-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+      <CardHeader className="pb-2 relative">
+        <div className="absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 bg-primary/5 rounded-full" />
+        <CardTitle className="text-lg font-medium flex items-center z-10">
+          <div className="p-2 bg-primary/10 rounded-lg mr-3">
+            <Icon className="h-5 w-5 text-primary" />
+          </div>
+          {title}
+        </CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="relative z-10">
+        <div className="text-3xl font-bold text-gray-800">{value}</div>
+        {subValue && (
+          <div className="text-sm text-gray-500 mt-1 flex items-center">
+            {subValue}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  </motion.div>
+);
+
+const RecentCard = ({ title, items, renderItem }: any) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3, delay: 0.2 }}
+  >
+    <Card className="bg-white/50 backdrop-blur-sm border-none ring-1 ring-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
+      <CardHeader>
+        <CardTitle className="text-lg font-medium flex items-center">
+          <div className="p-2 bg-primary/10 rounded-lg mr-3">
+            <Clock className="h-5 w-5 text-primary" />
+          </div>
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {items.length > 0 ? (
+            items.map((item: any) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3 }}
+                className="group"
+              >
+                {renderItem(item)}
+              </motion.div>
+            ))
+          ) : (
+            <p className="text-sm text-gray-500">No items found</p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  </motion.div>
+);
 
 export const DashboardOverview: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,7 +122,6 @@ export const DashboardOverview: React.FC = () => {
     testimoniesLoading,
   ]);
 
-  // Calculate statistics
   const totalRent = apartments.filter(
     (apt) => apt.status.toLowerCase() === "rent"
   ).length;
@@ -59,207 +129,136 @@ export const DashboardOverview: React.FC = () => {
     (apt) => apt.status.toLowerCase() === "sell"
   ).length;
 
-  // Get recent items - we'll use simple slicing instead of sorting by createdAt
-  // since the model doesn't have that property
   const recentApartments = [...apartments].slice(0, 5);
   const recentNews = [...newses].slice(0, 5);
   const recentTestimonies = [...testimonies].slice(0, 5);
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-secondary">Dashboard Overview</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 space-y-8 p-6">
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-4xl font-bold text-secondary bg-clip-text bg-gradient-to-r from-primary to-primary/80"
+      >
+        Dashboard Overview
+      </motion.h1>
 
       {/* Stats Cards */}
-      <div className="text-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-medium flex items-center">
-              <Home className="h-5 w-5 mr-2 text-primary" />
-              Properties
-            </CardTitle>
-            <CardDescription>Total properties listed</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{apartments.length}</div>
-            <div className="text-sm text-gray-500 mt-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard
+          icon={Building}
+          title="Properties"
+          description="Total properties listed"
+          value={apartments.length}
+          subValue={
+            <>
+              <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
               {totalRent} for rent · {totalSell} for sale
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-medium flex items-center">
-              <Newspaper className="h-5 w-5 mr-2 text-primary" />
-              Blogs
-            </CardTitle>
-            <CardDescription>Published news articles</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{newses.length}</div>
-            <div className="text-sm text-gray-500 mt-1">
-              Total published articles
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-medium flex items-center">
-              <MessageSquareQuote className="h-5 w-5 mr-2 text-primary" />
-              Testimonies
-            </CardTitle>
-            <CardDescription>Customer testimonials</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{testimonies.length}</div>
-            <div className="text-sm text-gray-500 mt-1">
-              From satisfied customers
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-medium flex items-center">
-              <BarChart className="h-5 w-5 mr-2 text-primary" />
-              Statistics
-            </CardTitle>
-            <CardDescription>Overall platform data</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">
-              {apartments.length + newses.length + testimonies.length}
-            </div>
-            <div className="text-sm text-gray-500 mt-1">
-              Total content items
-            </div>
-          </CardContent>
-        </Card>
+            </>
+          }
+        />
+        <StatCard
+          icon={Newspaper}
+          title="Blogs"
+          description="Published news articles"
+          value={newses.length}
+          subValue="Total published articles"
+        />
+        <StatCard
+          icon={MessageSquareQuote}
+          title="Testimonies"
+          description="Customer testimonials"
+          value={testimonies.length}
+          subValue="From satisfied customers"
+        />
+        <StatCard
+          icon={BarChart}
+          title="Statistics"
+          description="Overall platform data"
+          value={apartments.length + newses.length + testimonies.length}
+          subValue="Total content items"
+        />
       </div>
 
       {/* Recent Items */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-secondary">
-        {/* Recent Properties */}
-        <Card className="shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader>
-            <CardTitle className="text-lg font-medium flex items-center">
-              <Clock className="h-5 w-5 mr-2 text-primary" />
-              Recent Properties
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentApartments.length > 0 ? (
-                recentApartments.map((apartment) => (
-                  <div
-                    key={apartment.id}
-                    className="flex items-center space-x-3"
-                  >
-                    <div className="h-10 w-10 rounded overflow-hidden">
-                      <img
-                        src={apartment.imageUrl}
-                        alt={apartment.title}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">
-                        {apartment.title}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        ${apartment.price} · {apartment.status}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-gray-500">No properties found</p>
-              )}
+        <RecentCard
+          title="Recent Properties"
+          items={recentApartments}
+          renderItem={(apartment: any) => (
+            <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+              <div className="h-12 w-12 rounded-lg overflow-hidden ring-2 ring-gray-100">
+                <img
+                  src={apartment.imageUrl}
+                  alt={apartment.title}
+                  className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-800 truncate group-hover:text-primary transition-colors">
+                  {apartment.title}
+                </p>
+                <p className="text-xs text-gray-500">
+                  ${apartment.price} · {apartment.status}
+                </p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          )}
+        />
 
-        {/* Recent News */}
-        <Card className="text-secondary shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader>
-            <CardTitle className="text-lg font-medium flex items-center">
-              <Clock className="h-5 w-5 mr-2 text-primary" />
-              Recent News
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentNews.length > 0 ? (
-                recentNews.map((news) => (
-                  <div key={news.id} className="flex items-center space-x-3">
-                    <div className="h-10 w-10 rounded overflow-hidden">
-                      <img
-                        src={news.imageUrl as string}
-                        alt={news.title}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">
-                        {news.title}
-                      </p>
-                      <p className="text-xs text-gray-500">{news.date}</p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-gray-500">No news found</p>
-              )}
+        <RecentCard
+          title="Recent News"
+          items={recentNews}
+          renderItem={(news: any) => (
+            <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+              <div className="h-12 w-12 rounded-lg overflow-hidden ring-2 ring-gray-100">
+                <img
+                  src={news.imageUrl as string}
+                  alt={news.title}
+                  className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-800 truncate group-hover:text-primary transition-colors">
+                  {news.title}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {news.date.slice(0, 10)}
+                </p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          )}
+        />
 
-        {/* Recent Testimonies */}
-        <Card className="shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader>
-            <CardTitle className="text-lg font-medium flex items-center">
-              <Clock className="h-5 w-5 mr-2 text-primary" />
-              Recent Testimonies
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentTestimonies.length > 0 ? (
-                recentTestimonies.map((testimony) => (
-                  <div
-                    key={testimony.id}
-                    className="flex items-center space-x-3"
-                  >
-                    <div className="h-10 w-10 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-                      {testimony.imageUrl ? (
-                        <img
-                          src={testimony.imageUrl}
-                          alt={testimony.name}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <span className="text-xs font-medium">
-                          {testimony.name?.slice(0, 2).toUpperCase()}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">
-                        {testimony.name}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {testimony.description.slice(0, 40)}...
-                      </p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-gray-500">No testimonies found</p>
-              )}
+        <RecentCard
+          title="Recent Testimonies"
+          items={recentTestimonies}
+          renderItem={(testimony: any) => (
+            <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+              <div className="h-12 w-12 rounded-full overflow-hidden ring-2 ring-gray-100 bg-gray-200 flex items-center justify-center">
+                {testimony.imageUrl ? (
+                  <img
+                    src={testimony.imageUrl}
+                    alt={testimony.name}
+                    className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                ) : (
+                  <span className="text-sm font-medium text-gray-600">
+                    {testimony.name?.slice(0, 2).toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-800 truncate group-hover:text-primary transition-colors">
+                  {testimony.name}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {testimony.description.slice(0, 40)}...
+                </p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          )}
+        />
       </div>
     </div>
   );

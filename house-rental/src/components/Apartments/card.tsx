@@ -21,7 +21,11 @@ export const ApartmentCard = ({
       <div className="relative overflow-hidden rounded-md">
         <img
           // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnakZlnxxgnoWPcILVLnvcfnct7DSJ8yBYBQ&s"
-          src={`${apartment.imageUrl}`}
+          src={
+            apartment.imageUrl && apartment.imageUrl.trim() !== ""
+              ? apartment.imageUrl
+              : "./placeholder.png"
+          }
           alt={apartment.title}
           className="w-full h-48 object-cover transition-transform duration-500 rounded-md"
         />

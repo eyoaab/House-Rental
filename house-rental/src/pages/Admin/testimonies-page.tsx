@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { fetchTestimonies } from "@/state-managment/slices/testimony-slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/state-managment/store";
 import { TestimonyTable } from "@/components/Admin/testimony-table";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { TestimonyForm } from "@/components/Admin/testimony-form";
 import { UpdateTestimony } from "@/components/Admin/update-testimony";
@@ -36,9 +34,12 @@ export default function TestimoniesPage() {
   const [editingTestimony, setEditingTestimony] = useState<Testimony | null>(
     null
   );
+  const hideTestimonyPopup = () => {
+    setEditingTestimony(null);
+  };
 
   useEffect(() => {
-    dispatch(setSelectedIndex(5)); // Update to the correct index for admin
+    dispatch(setSelectedIndex(5));
     if (testimonies.length === 0 && !loading) {
       dispatch(fetchTestimonies());
     }
@@ -50,7 +51,7 @@ export default function TestimoniesPage() {
         "https://house-rental-backend-tc9z.onrender.com/api/testimony/" + id
       );
       if (response.status === 200) {
-        dispatch(fetchTestimonies()); // Refresh the testimonies list after deletion
+        dispatch(fetchTestimonies());
         toast.success("Testimony deleted successfully");
       } else {
         toast.error("Failed to delete testimony");
@@ -74,13 +75,6 @@ export default function TestimoniesPage() {
               Manage your customer testimonials
             </CardDescription>
           </div>
-          <Button
-            onClick={() => setIsAddTestimonyOpen(true)}
-            className="bg-primary text-white transition-colors duration-200 w-full sm:w-auto"
-          >
-            <PlusCircle className="mr-2 h-5 w-5" />
-            Add Testimony
-          </Button>
         </CardHeader>
         <CardContent className="p-6">
           <div className="overflow-x-auto">
@@ -119,7 +113,10 @@ export default function TestimoniesPage() {
                 Update the testimony details.
               </DialogDescription>
             </DialogHeader>
-            <UpdateTestimony testimony={editingTestimony} />
+            <UpdateTestimony
+              testimony={editingTestimony}
+              closeTestimonyPopup={hideTestimonyPopup}
+            />
           </DialogContent>
         </Dialog>
       )}

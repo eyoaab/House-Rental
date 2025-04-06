@@ -12,6 +12,9 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import type { Apartment } from "@/types/apartment-type";
+import { fetchApartments } from "../../state-managment/slices/apartments-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/state-managment/store";
 
 const features = [
   { id: "pool", label: "Pool" },
@@ -26,17 +29,27 @@ const features = [
 
 interface UpdateApartmentProps {
   apartment: Apartment;
+  closeEditingPopUp: () => void;
 }
-export function UpdateApartment({ apartment }: UpdateApartmentProps) {
+export function UpdateApartment({
+  apartment,
+  closeEditingPopUp,
+}: UpdateApartmentProps) {
   const [title, setTitle] = useState(apartment.title);
   const [location, setLocation] = useState(apartment.location);
   const [noRoom, setNoRoom] = useState(apartment.noRoom);
   const [noBathRoom, setNoBathRoom] = useState(apartment.noBathRoom);
   const [area, setArea] = useState(apartment.area);
   const [price, setPrice] = useState(apartment.price);
-  const [availableFrom, setAvailableFrom] = useState(apartment.availableFrom);
-  const [availableTo, setAvailableTo] = useState(apartment.availableTo);
-  const [imageUrl, setImageUrl] = useState(apartment.imageUrl);
+  const [availableFrom, setAvailableFrom] = useState<string>(
+    apartment.availableFrom
+      ? new Date(apartment.availableFrom).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0]
+  );
+  const [availableTo, setAvailableTo] = useState(
+    apartment.availableTo || new Date().toISOString().split("T")[0]
+  );
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [status, setStatus] = useState(apartment.status);
   const [catagory, setCatagory] = useState(apartment.catagory);
   const [averageRating, setAverageRating] = useState(apartment.averageRating);
@@ -44,40 +57,51 @@ export function UpdateApartment({ apartment }: UpdateApartmentProps) {
   const [selectedFeature, setSelectedFeature] = useState<string[]>(
     apartment.features
   );
+  const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(): Promise<void> {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("location", location);
+    formData.append("noRoom", noRoom);
+    formData.append("noBathRoom", noBathRoom);
+    formData.append("area", area);
+    formData.append("price", price.toString());
+    formData.append("availableFrom", availableFrom);
+    formData.append("availableTo", availableTo);
+    formData.append("status", status);
+    formData.append("catagory", catagory);
+    formData.append("averageRating", averageRating.toString());
+    formData.append("description", description);
+    formData.append("features", JSON.stringify(selectedFeature.join(",")));
+
+    if (imageFile) {
+      formData.append("image", imageFile); // Append the selected image file
+    }
+
     try {
       setLoading(true);
-      const respose = await axios.put(
+      const response = await axios.put(
         "https://house-rental-backend-tc9z.onrender.com/api/apartments/" +
           apartment.id,
+        formData,
         {
-          title,
-          location,
-          noRoom,
-          noBathRoom,
-          area,
-          price,
-          availableFrom,
-          availableTo,
-          imageUrl,
-          status,
-          catagory,
-          averageRating,
-          description,
-          features: JSON.stringify(selectedFeature.join(",")),
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-      console.log(respose.data);
-      if (respose.status === 201 || respose.status === 200) {
+      console.log(response.data);
+      if (response.status === 201 || response.status === 200) {
+        dispatch(fetchApartments());
         toast.success("Apartment Updated successfully");
+        closeEditingPopUp();
       }
       setLoading(false);
     } catch (error) {
       setLoading(false);
-
-      toast.error("Failed to create apartment");
+      toast.error("Failed to update apartment");
       console.log(error);
     }
   }
@@ -170,11 +194,16 @@ export function UpdateApartment({ apartment }: UpdateApartmentProps) {
         </div>
 
         <div>
-          <label>Image URL</label>
+          <label>Image</label>
           <Input
-            value={imageUrl}
-            placeholder="https://example.com/image.jpg"
-            onChange={(e) => setImageUrl(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setImageFile(file);
+              }
+            }}
           />
         </div>
 

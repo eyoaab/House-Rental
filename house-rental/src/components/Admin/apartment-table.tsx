@@ -87,7 +87,11 @@ export function ApartmentTable({
                 >
                   <TableCell className="px-6 py-4">
                     <img
-                      src={apartment.imageUrl}
+                      src={
+                        apartment.imageUrl && apartment.imageUrl.trim() !== ""
+                          ? apartment.imageUrl
+                          : "./placeholder.png"
+                      }
                       alt={apartment.title}
                       className="h-12 w-12 object-cover rounded-md"
                     />

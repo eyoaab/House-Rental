@@ -26,7 +26,8 @@ export const registerUser = createAsyncThunk<
 
       // If status is not 201, extract message from the response
       if (response.status !== 201) {
-        localStorage.setItem("authToken", response.data.token);
+        console.log("user sing up", response.data);
+        localStorage.setItem("token", response.data.token);
         return rejectWithValue(
           response.data?.message || "Registration failed."
         );
