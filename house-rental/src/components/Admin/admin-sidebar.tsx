@@ -184,39 +184,37 @@ export const AdminSidebar: React.FC = () => {
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       <aside
         className={cn(
-          "bg-white border-r border-gray-200 shadow-sm transition-all duration-300 z-40",
-          // Mobile: full-screen when open, hidden when closed
+          "bg-white/95 backdrop-blur-md border-r border-gray-100 shadow-lg transition-all duration-300 z-40",
           isMobileMenuOpen
             ? "fixed inset-y-0 left-0 w-[280px] max-w-[80%] h-full"
             : "fixed -left-full lg:left-0 h-full",
-          // Desktop: collapsed or expanded, but always full height and fixed
           isCollapsed ? "lg:w-20" : "lg:w-64",
           "lg:sticky lg:top-0 lg:h-screen"
         )}
       >
         {/* Header with Logo */}
-        <div className="p-4 h-16 flex items-center justify-between border-b border-gray-200">
+        <div className="p-4 h-16 flex items-center justify-between border-b border-gray-100 bg-white/50">
           <div className="flex items-center">
-            {/* Logo always visible, even when collapsed */}
             <div className="flex items-center justify-center text-primary">
-              <BuildingIcon className="h-8 w-8" />
+              <BuildingIcon className="h-8 w-8 text-primary" />
               {!isCollapsed && (
-                <span className="ml-2 font-bold text-lg">House Rental</span>
+                <span className="ml-2 font-bold text-lg bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  House Rental
+                </span>
               )}
             </div>
           </div>
 
-          {/* Collapse toggle button (desktop only) */}
           <button
             onClick={toggleCollapse}
-            className="hidden lg:flex items-center justify-center p-1.5 rounded-md hover:bg-gray-100 text-gray-500"
+            className="hidden lg:flex items-center justify-center p-1.5 rounded-full text-gray-400 transition-colors duration-200"
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {isCollapsed ? (
@@ -228,20 +226,19 @@ export const AdminSidebar: React.FC = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100vh-4rem)]">
+        <nav className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-4rem)] bg-gradient-to-b from-gray-300 to-gray-200">
           {menuItems.map((item) => (
             <div key={item.title}>
               {item.submenu ? (
                 <>
                   <button
                     className={cn(
-                      "flex items-center justify-between w-full rounded-md",
-                      "transition-colors duration-200",
-                      "hover:bg-primary/5",
+                      "flex items-center justify-between w-full rounded-lg",
+                      "transition-all duration-200",
                       isMenuActive(item)
-                        ? "bg-primary/10 text-primary font-medium"
-                        : "text-gray-800 hover:text-primary",
-                      isCollapsed ? "px-2 py-3" : "px-3 py-3"
+                        ? "bg-primary text-white shadow-md shadow-primary/20"
+                        : "text-gray-700 bg-white/50",
+                      isCollapsed ? "px-2 py-3" : "px-4 py-3"
                     )}
                     onClick={() => toggleMenu(item.title)}
                   >
@@ -251,14 +248,7 @@ export const AdminSidebar: React.FC = () => {
                         isCollapsed ? "justify-center w-full" : "space-x-3"
                       )}
                     >
-                      <span
-                        className={cn(
-                          "transition-colors duration-200",
-                          isMenuActive(item) ? "text-primary" : "text-gray-700"
-                        )}
-                      >
-                        {item.icon}
-                      </span>
+                      <span className="text-inherit">{item.icon}</span>
                       {!isCollapsed && <span>{item.title}</span>}
                     </div>
                     {!isCollapsed && (
@@ -268,23 +258,22 @@ export const AdminSidebar: React.FC = () => {
                           openMenus[item.title] ? "rotate-180" : ""
                         )}
                       >
-                        <ChevronDown className="h-4 w-4 text-gray-600" />
+                        <ChevronDown className="h-4 w-4" />
                       </span>
                     )}
                   </button>
                   {openMenus[item.title] && item.submenu && !isCollapsed && (
-                    <div className="ml-6 mt-1 space-y-1">
+                    <div className="ml-6 mt-2 space-y-1">
                       {item.submenu.map((subItem) => (
                         <Link
                           key={subItem.path}
                           to={subItem.path}
                           className={cn(
                             "flex items-center space-x-2 p-2 rounded-md",
-                            "transition-colors duration-200",
-                            "hover:bg-primary/5",
+                            "transition-all duration-200",
                             isSubmenuItemActive(subItem.path)
                               ? "bg-primary/10 text-primary font-medium"
-                              : "text-gray-700 hover:text-primary"
+                              : "text-gray-600"
                           )}
                         >
                           <span
@@ -292,7 +281,7 @@ export const AdminSidebar: React.FC = () => {
                               "transition-colors duration-200",
                               isSubmenuItemActive(subItem.path)
                                 ? "text-primary"
-                                : "text-gray-700"
+                                : "text-gray-500"
                             )}
                           >
                             {subItem.icon}
@@ -307,26 +296,18 @@ export const AdminSidebar: React.FC = () => {
                 <Link
                   to={item.path || "#"}
                   className={cn(
-                    "flex items-center rounded-md",
-                    "transition-colors duration-200",
-                    "hover:bg-primary/5",
+                    "flex items-center rounded-lg",
+                    "transition-all duration-200",
                     isMenuActive(item)
-                      ? "bg-primary/10 text-primary font-medium"
-                      : "text-gray-800 hover:text-primary",
+                      ? "bg-primary text-white shadow-md shadow-primary/20"
+                      : "text-gray-700 bg-white/50",
                     isCollapsed
                       ? "justify-center px-2 py-3"
-                      : "space-x-3 px-3 py-3"
+                      : "space-x-3 px-4 py-3"
                   )}
                   title={isCollapsed ? item.title : undefined}
                 >
-                  <span
-                    className={cn(
-                      "transition-colors duration-200",
-                      isMenuActive(item) ? "text-primary" : "text-gray-700"
-                    )}
-                  >
-                    {item.icon}
-                  </span>
+                  <span className="text-inherit">{item.icon}</span>
                   {!isCollapsed && <span>{item.title}</span>}
                 </Link>
               )}

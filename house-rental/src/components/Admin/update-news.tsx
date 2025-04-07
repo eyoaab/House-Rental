@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { fetchNews } from "@/state-managment/slices/news-slice";
-import { useDispatch } from "react-redux";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
 import type { News } from "@/types/news-type";
+import { fetchNews } from "@/state-managment/slices/news-slice";
+import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/state-managment/store";
 
 interface UpdateNewsProps {

@@ -5,6 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
+import { fetchNews } from "@/state-managment/slices/news-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/state-managment/store";
 
 export function NewsForm() {
   const [title, setTitle] = useState("");
@@ -12,6 +15,7 @@ export function NewsForm() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault(); // Prevent default form submission behavior
@@ -38,12 +42,12 @@ export function NewsForm() {
       );
 
       if (response.status === 201) {
-        toast.success("News created successfully");
-        // Optionally reset the form fields
+        dispatch(fetchNews());
         setTitle("");
         setDescription("");
         setImageFile(null);
         setDate("");
+        toast.success("News created successfully");
       } else {
         toast.error("Unexpected response from the server");
       }

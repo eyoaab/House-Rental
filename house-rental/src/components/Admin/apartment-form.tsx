@@ -11,6 +11,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { fetchApartments } from "../../state-managment/slices/apartments-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/state-managment/store";
 
 const features = [
   { id: "pool", label: "Pool" },
@@ -43,6 +46,7 @@ export function ApartmentForm() {
   const [description, setDescription] = useState("");
   const [selectedFeature, setSelectedFeature] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   async function handleSubmit(): Promise<void> {
     try {
@@ -78,6 +82,7 @@ export function ApartmentForm() {
 
       console.log(response.data);
       if (response.status === 201) {
+        dispatch(fetchApartments());
         setTitle("");
         setLocation("");
         setNoRoom("");

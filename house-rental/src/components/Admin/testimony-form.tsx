@@ -11,6 +11,9 @@ import {
 import { useState } from "react";
 import Axios from "axios";
 import { toast } from "react-toastify";
+import { fetchTestimonies } from "@/state-managment/slices/testimony-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/state-managment/store";
 
 export function TestimonyForm() {
   const [name, setName] = useState("");
@@ -18,6 +21,7 @@ export function TestimonyForm() {
   const [rate, setRate] = useState(0);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   async function handleSubmit() {
     console.log("is about to submit");
@@ -45,11 +49,12 @@ export function TestimonyForm() {
       );
       setLoading(false);
       if (response.status === 201) {
-        toast.success("Testimony created successfully");
+        dispatch(fetchTestimonies());
         setName("");
         setDescription("");
         setRate(0);
         setImageFile(null);
+        toast.success("Testimony created successfully");
       }
       console.log(response);
     } catch (error: any) {
