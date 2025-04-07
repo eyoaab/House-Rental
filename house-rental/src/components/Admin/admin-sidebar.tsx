@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+
 import {
   ChevronDown,
   LayoutDashboard,
@@ -12,7 +14,6 @@ import {
   X,
   ArrowLeftCircle,
   ArrowRightCircle,
-  BuildingIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -203,7 +204,9 @@ export const AdminSidebar: React.FC = () => {
         <div className="p-4 h-16 flex items-center justify-between border-b border-gray-100 bg-white/50">
           <div className="flex items-center">
             <div className="flex items-center justify-center text-primary">
-              <BuildingIcon className="h-8 w-8 text-primary" />
+              <Avatar className="h-10 w-10">
+                <AvatarImage src="/logo.jpeg" alt="Logo" />
+              </Avatar>
               {!isCollapsed && (
                 <span className="ml-2 font-bold text-lg bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                   House Rental
