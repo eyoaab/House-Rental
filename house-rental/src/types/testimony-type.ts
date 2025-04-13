@@ -5,6 +5,7 @@ export interface Testimony {
   description: string;
   rate: number;
   imageUrl: string;
+  creatorId: string;
 }
 
 export interface TestimonyState {

@@ -46,6 +46,8 @@ export function ApartmentForm() {
   const [description, setDescription] = useState("");
   const [selectedFeature, setSelectedFeature] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
+  const creatorId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
   const dispatch = useDispatch<AppDispatch>();
 
   async function handleSubmit(): Promise<void> {
@@ -65,6 +67,7 @@ export function ApartmentForm() {
       formData.append("averageRating", averageRating.toString());
       formData.append("description", description);
       formData.append("features", JSON.stringify(selectedFeature));
+      formData.append("creatorId", creatorId);
 
       if (imageFile) {
         formData.append("image", imageFile); // Append the selected image file

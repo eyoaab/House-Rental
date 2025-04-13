@@ -5,6 +5,7 @@ export interface News {
   description: string;
   imageUrl: String;
   date: string;
+  creatorId?: String;
 }
 
 export interface NewsState {

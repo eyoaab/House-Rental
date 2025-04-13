@@ -19,6 +19,9 @@ import { MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
+const token = localStorage.getItem("token");
+const creatorId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
+
 interface ApartmentTableProps {
   apartments: Apartment[];
   onEdit: (apartment: Apartment) => void;
@@ -61,7 +64,8 @@ export function ApartmentTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {apartments.length === 0 ? (
+            {apartments.filter((apartment) => apartment.creatorId == creatorId)
+              .length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={8}
@@ -76,94 +80,98 @@ export function ApartmentTable({
                 </TableCell>
               </TableRow>
             ) : (
-              apartments.map((apartment, index) => (
-                <TableRow
-                  key={apartment.id}
-                  className={cn(
-                    "border-b last:border-b-0 border-gray-300",
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50",
-                    "hover:bg-gray-100 transition-colors duration-200"
-                  )}
-                >
-                  <TableCell className="px-6 py-4">
-                    <img
-                      src={
-                        apartment.imageUrl && apartment.imageUrl.trim() !== ""
-                          ? apartment.imageUrl
-                          : "./placeholder.png"
-                      }
-                      alt={apartment.title}
-                      className="h-12 w-12 object-cover rounded-md"
-                    />
-                  </TableCell>
-                  <TableCell className="px-6 py-4 font-medium text-secondary truncate max-w-[200px]">
-                    <span title={apartment.title}>{apartment.title}</span>
-                  </TableCell>
-                  <TableCell className="px-6 py-4 text-gray-700 truncate max-w-[180px]">
-                    <span title={apartment.location}>{apartment.location}</span>
-                  </TableCell>
-                  <TableCell className="px-6 py-4 text-gray-700">
-                    {apartment.noRoom}
-                  </TableCell>
-                  <TableCell className="px-6 py-4 text-gray-700">
-                    <span className="font-medium">
-                      ${apartment.price.toLocaleString()}
-                    </span>
-                  </TableCell>
-                  <TableCell className="px-6 py-4">
-                    <Badge
-                      className={cn(
-                        "font-medium",
-                        apartment.status.toLocaleLowerCase() === "sell"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-gray-100 text-primary"
-                      )}
-                    >
-                      {apartment.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="px-6 py-4">
-                    <div className="flex items-center">
-                      <span className="text-gray-700 font-medium">
-                        {apartment.averageRating.toFixed(1)}
+              apartments
+                .filter((apartment) => apartment.creatorId == creatorId)
+                .map((apartment, index) => (
+                  <TableRow
+                    key={apartment.id}
+                    className={cn(
+                      "border-b last:border-b-0 border-gray-300",
+                      index % 2 === 0 ? "bg-white" : "bg-gray-50",
+                      "hover:bg-gray-100 transition-colors duration-200"
+                    )}
+                  >
+                    <TableCell className="px-6 py-4">
+                      <img
+                        src={
+                          apartment.imageUrl && apartment.imageUrl.trim() !== ""
+                            ? apartment.imageUrl
+                            : "./placeholder.png"
+                        }
+                        alt={apartment.title}
+                        className="h-12 w-12 object-cover rounded-md"
+                      />
+                    </TableCell>
+                    <TableCell className="px-6 py-4 font-medium text-secondary truncate max-w-[200px]">
+                      <span title={apartment.title}>{apartment.title}</span>
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-gray-700 truncate max-w-[180px]">
+                      <span title={apartment.location}>
+                        {apartment.location}
                       </span>
-                      <span className="text-gray-400 text-xs ml-1">/5</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="px-6 py-4 text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className="h-9 w-9 p-0 rounded-full hover:bg-gray-200"
-                        >
-                          <MoreHorizontal className="h-5 w-5 text-gray-600" />
-                          <span className="sr-only">Open menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        align="end"
-                        className="w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-gray-700">
+                      {apartment.noRoom}
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-gray-700">
+                      <span className="font-medium">
+                        ${apartment.price.toLocaleString()}
+                      </span>
+                    </TableCell>
+                    <TableCell className="px-6 py-4">
+                      <Badge
+                        className={cn(
+                          "font-medium",
+                          apartment.status.toLocaleLowerCase() === "sell"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-gray-100 text-primary"
+                        )}
                       >
-                        <DropdownMenuItem
-                          onClick={() => onEdit(apartment)}
-                          className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        {apartment.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="px-6 py-4">
+                      <div className="flex items-center">
+                        <span className="text-gray-700 font-medium">
+                          {apartment.averageRating.toFixed(1)}
+                        </span>
+                        <span className="text-gray-400 text-xs ml-1">/5</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className="h-9 w-9 p-0 rounded-full hover:bg-gray-200"
+                          >
+                            <MoreHorizontal className="h-5 w-5 text-gray-600" />
+                            <span className="sr-only">Open menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          align="end"
+                          className="w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
                         >
-                          <Edit className="mr-2 h-4 w-4" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => onDelete(apartment.id)}
-                          className="flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))
+                          <DropdownMenuItem
+                            onClick={() => onEdit(apartment)}
+                            className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                          >
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => onDelete(apartment.id)}
+                            className="flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))
             )}
           </TableBody>
         </Table>

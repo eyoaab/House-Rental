@@ -16,6 +16,8 @@ export function NewsForm() {
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const token = localStorage.getItem("token");
+  const creatorId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault(); // Prevent default form submission behavior
@@ -27,6 +29,7 @@ export function NewsForm() {
       formData.append("description", description);
       formData.append("date", date);
       formData.append("category", ""); // Assuming category is not used
+      formData.append("creatorId", creatorId);
       if (imageFile) {
         formData.append("image", imageFile); // Append the image file
       }
@@ -40,6 +43,7 @@ export function NewsForm() {
           },
         }
       );
+      console.log("Response:", response.data);
 
       if (response.status === 201) {
         dispatch(fetchNews());

@@ -17,6 +17,7 @@ export interface Apartment {
   createdAt: string;
   updatedAt: string;
   averageRating: number;
+  creatorId: string;
 }
 
 export interface ApartmentsState {

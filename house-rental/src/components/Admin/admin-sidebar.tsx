@@ -221,7 +221,7 @@ export const AdminSidebar: React.FC = () => {
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {isCollapsed ? (
-              <ArrowRightCircle className="h-5 w-5" />
+              <ArrowRightCircle className="h-5 w-5 " />
             ) : (
               <ArrowLeftCircle className="h-5 w-5" />
             )}

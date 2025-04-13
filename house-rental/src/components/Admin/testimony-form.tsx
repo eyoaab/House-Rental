@@ -22,6 +22,9 @@ export function TestimonyForm() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const token = localStorage.getItem("token");
+
+  const creatorId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
 
   async function handleSubmit() {
     console.log("is about to submit");
@@ -37,6 +40,7 @@ export function TestimonyForm() {
       formData.append("description", description);
       formData.append("rate", rate.toString());
       formData.append("image", imageFile);
+      formData.append("creatorId", creatorId || "");
 
       const response = await Axios.post(
         "https://house-rental-backend-tc9z.onrender.com/api/testimony",

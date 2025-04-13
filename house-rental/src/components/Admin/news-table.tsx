@@ -25,6 +25,9 @@ interface NewsTableProps {
 }
 
 export function NewsTable({ news, onEdit, onDelete }: NewsTableProps) {
+  const token = localStorage.getItem("token");
+  const creatorId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
+
   return (
     <div className="rounded-lg  shadow-sm overflow-hidden bg-white border border-gray-200">
       <div className="overflow-x-auto">
@@ -44,7 +47,7 @@ export function NewsTable({ news, onEdit, onDelete }: NewsTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {news.length === 0 ? (
+            {news.filter((item) => item.creatorId == creatorId).length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={4}
@@ -61,72 +64,71 @@ export function NewsTable({ news, onEdit, onDelete }: NewsTableProps) {
                 </TableCell>
               </TableRow>
             ) : (
-              news.map((item, index) => (
-                <TableRow
-                  key={item.id}
-                  className={cn(
-                    "border-b last:border-b-0 border-gray-300",
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50",
-                    "hover:bg-gray-100 transition-colors duration-200"
-                  )}
-                >
-                  <TableCell className="px-6 py-4">
-                    <div className="relative h-12 w-20">
-                      <img
-                        src={
-                          item.imageUrl
-                            ? String(item.imageUrl)
-                            : "/placeholder.png"
-                        }
-                        alt={item.title}
-                        className="object-cover rounded-md shadow-sm w-full h-full transition-transform hover:scale-105"
-                      />
-                    </div>
-                  </TableCell>
-                  <TableCell className="px-6 py-4 font-medium text-secondary truncate max-w-[300px]">
-                    <span title={item.title}>{item.title}</span>
-                  </TableCell>
-                  <TableCell className="px-6 py-4 text-gray-700">
-                    {new Date(item.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </TableCell>
-                  <TableCell className="px-6 py-4 text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className="h-9 w-9 p-0 rounded-full hover:bg-gray-200"
-                        >
-                          <MoreHorizontal className="h-5 w-5 text-gray-600" />
-                          <span className="sr-only">Open menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        align="end"
-                        className="w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-                      >
-                        <DropdownMenuItem
-                          onClick={() => onEdit(item)}
-                          className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                        >
-                          <Edit className="mr-2 h-4 w-4" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => onDelete(item.id)}
-                          className="flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))
+              news
+                .filter((item) => item.creatorId == creatorId)
+                .map((item, index) => (
+                  <TableRow
+                    key={item.id}
+                    className={cn(
+                      "border-b last:border-b-0 border-gray-300",
+                      index % 2 === 0 ? "bg-white" : "bg-gray-50",
+                      "hover:bg-gray-100 transition-colors duration-200"
+                    )}
+                  >
+                    <TableCell className="px-6 py-4">
+                      <div className="relative h-12 w-20">
+                        <img
+                          src={
+                            item.imageUrl
+                              ? String(item.imageUrl)
+                              : "/placeholder.png"
+                          }
+                          alt={item.title}
+                          className="object-cover rounded-md shadow-sm w-full h-full transition-transform hover:scale-105"
+                        />
+                      </div>
+                    </TableCell>
+                    <TableCell className="px-6 py-4 font-medium text-secondary truncate max-w-[300px]">
+                      <span title={item.title}>{item.title}</span>
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-gray-700">
+                      {new Date(item.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className="h-9 w-9 p-0 rounded-full hover:bg-gray-200"
+                          >
+                            <MoreHorizontal className="h-5 w-5 text-gray-600" />
+                            <span className="sr-only">Open menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            onClick={() => onEdit(item)}
+                            className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                          >
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => onDelete(item.id)}
+                            className="flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))
             )}
           </TableBody>
         </Table>

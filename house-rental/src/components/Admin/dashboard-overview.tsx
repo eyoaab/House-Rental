@@ -90,6 +90,9 @@ const RecentCard = ({ title, items, renderItem }: any) => (
 
 export const DashboardOverview: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const token = localStorage.getItem("token");
+  const creatorId = token ? JSON.parse(atob(token.split(".")[1])).id : null;
+
   const { apartments, loading: apartmentsLoading } = useSelector(
     (state: RootState) => state.apartments
   );
@@ -127,9 +130,15 @@ export const DashboardOverview: React.FC = () => {
     (apt) => apt.status.toLowerCase() === "sell"
   ).length;
 
-  const recentApartments = [...apartments].slice(0, 5);
-  const recentNews = [...newses].slice(0, 5);
-  const recentTestimonies = [...testimonies].slice(0, 5);
+  const recentApartments = apartments
+    .filter((apt) => apt.creatorId == creatorId)
+    .slice(0, 5);
+  const recentNews = newses
+    .filter((news) => news.creatorId == creatorId)
+    .slice(0, 5);
+  const recentTestimonies = testimonies
+    .filter((testimony) => testimony.creatorId == creatorId)
+    .slice(0, 5);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 space-y-8 p-6">
@@ -147,11 +156,26 @@ export const DashboardOverview: React.FC = () => {
           icon={Building}
           title="Properties"
           description="Total properties listed"
-          value={apartments.length}
+          value={apartments.filter((apt) => apt.creatorId == creatorId).length}
           subValue={
             <>
               <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
-              {totalRent} for rent · {totalSell} for sale
+              {
+                apartments.filter(
+                  (apt) =>
+                    apt.creatorId == creatorId &&
+                    apt.status.toLowerCase() === "rent"
+                ).length
+              }{" "}
+              for rent ·{" "}
+              {
+                apartments.filter(
+                  (apt) =>
+                    apt.creatorId == creatorId &&
+                    apt.status.toLowerCase() === "sell"
+                ).length
+              }{" "}
+              for sale
             </>
           }
         />
@@ -159,21 +183,29 @@ export const DashboardOverview: React.FC = () => {
           icon={Newspaper}
           title="Blogs"
           description="Published news articles"
-          value={newses.length}
+          value={newses.filter((news) => news.creatorId == creatorId).length}
           subValue="Total published articles"
         />
         <StatCard
           icon={MessageSquareQuote}
           title="Testimonies"
           description="Customer testimonials"
-          value={testimonies.length}
+          value={
+            testimonies.filter((testimony) => testimony.creatorId == creatorId)
+              .length
+          }
           subValue="From satisfied customers"
         />
         <StatCard
           icon={BarChart}
           title="Statistics"
           description="Overall platform data"
-          value={apartments.length + newses.length + testimonies.length}
+          value={
+            apartments.filter((apt) => apt.creatorId == creatorId).length +
+            newses.filter((news) => news.creatorId == creatorId).length +
+            testimonies.filter((testimony) => testimony.creatorId == creatorId)
+              .length
+          }
           subValue="Total content items"
         />
       </div>
