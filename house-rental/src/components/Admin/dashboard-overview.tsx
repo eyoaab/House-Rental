@@ -123,12 +123,12 @@ export const DashboardOverview: React.FC = () => {
     testimoniesLoading,
   ]);
 
-  const totalRent = apartments.filter(
-    (apt) => apt.status.toLowerCase() === "rent"
-  ).length;
-  const totalSell = apartments.filter(
-    (apt) => apt.status.toLowerCase() === "sell"
-  ).length;
+  // const totalRent = apartments.filter(
+  //   (apt) => apt.status.toLowerCase() === "rent"
+  // ).length;
+  // const totalSell = apartments.filter(
+  //   (apt) => apt.status.toLowerCase() === "sell"
+  // ).length;
 
   const recentApartments = apartments
     .filter((apt) => apt.creatorId == creatorId)
