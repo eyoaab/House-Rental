@@ -36,20 +36,22 @@ const AdminLayout: React.FC = () => {
                 <div className="text-black border-white/20">
                   {user?.username || userName}
                 </div>
-                <div
-                  onClick={handleLogout}
-                  className="py-1 px-2 cursor-pointer rounded-md bg-primary hover:text-white border border-gray"
-                >
-                  Logout
-                </div>
+                <Link to="/">
+                  <div
+                    // onClick={handleLogout}
+                    className="py-1 px-2 cursor-pointer rounded-md bg-primary hover:text-white border border-gray"
+                  >
+                    Home
+                  </div>
+                </Link>
               </>
             ) : (
-              <Link to="/login">
+              <Link to="/">
                 <Button
                   variant="outline"
                   className="bg-gray-500 text-white border-white/20 hover:bg-primary"
                 >
-                  Login
+                  Home
                 </Button>
               </Link>
             )}

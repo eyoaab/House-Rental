@@ -26,6 +26,7 @@ function NavBar({ navItems = [] }) {
     { label: "About", path: "/about" },
     { label: "Services", path: "/services" },
     { label: "Blog", path: "/news" },
+    { label: "Dashboard", path: "/admin" },
   ];
 
   const items = navItems.length > 0 ? navItems : defaultItems;
@@ -41,7 +42,7 @@ function NavBar({ navItems = [] }) {
             if (item.label === "Admin") {
               return isAdmin;
             }
-            return index < 5 || isAdmin;
+            return index < 6 || isAdmin;
           })
           .map((item, index) => (
             <Link key={index} to={item.path}>
@@ -101,7 +102,7 @@ function NavBar({ navItems = [] }) {
                 if (item.label === "Admin") {
                   return isAdmin;
                 }
-                return index < 5 || isAdmin;
+                return index < 6 || isAdmin;
               })
               .map((item, index) => (
                 <DropdownMenuItem
