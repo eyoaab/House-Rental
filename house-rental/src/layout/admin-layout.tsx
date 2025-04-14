@@ -1,26 +1,26 @@
 import React from "react";
 import { AdminSidebar } from "@/components/Admin/admin-sidebar";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { RootState } from "@/state-managment/store";
-import { logout } from "@/state-managment/slices/user-slice";
+// import { logout } from "@/state-managment/slices/user-slice";
 import { Button } from "@/components/ui/button";
 
 const AdminLayout: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
   const userName = token
     ? JSON.parse(atob(token.split(".")[1])).username
     : null;
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    dispatch(logout());
-    navigate("/login");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   dispatch(logout());
+  //   navigate("/login");
+  // };
 
   return (
     <div className="flex flex-col lg:flex-row w-screen h-screen overflow-hidden bg-gray-50">
